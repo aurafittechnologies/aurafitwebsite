@@ -518,6 +518,151 @@
   }
   .p-gallery-dots .dot.active{ background:var(--gold-2); width:18px; border-radius:4px; }
   .p-modal-body{ padding:44px 40px; }
+
+  /* ---------- CONFIGURATOR (wattage / CCT / qty) ---------- */
+  .p-configurator{ margin:26px 0 20px; padding-top:22px; border-top:1px solid var(--line); }
+  .cfg-field{ margin-bottom:16px; }
+  .cfg-field label{
+    display:block; font-size:10.5px; letter-spacing:0.16em; text-transform:uppercase;
+    color:var(--grey); margin-bottom:8px;
+  }
+  .cfg-field select{
+    width:100%; background:var(--black-2); border:1px solid var(--line); color:var(--ivory);
+    font-family:inherit; font-size:14.5px; padding:11px 14px; border-radius:8px;
+    appearance:none; -webkit-appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d9b45c' stroke-width='2'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat:no-repeat; background-position:right 14px center; background-size:16px;
+    cursor:pointer;
+  }
+  .cfg-field select:focus{ outline:none; border-color:var(--gold-2); }
+  .cfg-field.static-value .static-text{
+    background:var(--black-2); border:1px solid var(--line); color:var(--ivory);
+    font-size:14.5px; padding:11px 14px; border-radius:8px; display:block;
+  }
+  .qty-stepper{ display:flex; align-items:center; border:1px solid var(--line); border-radius:8px; overflow:hidden; width:140px; }
+  .qty-stepper button{
+    background:var(--black-2); border:none; color:var(--gold-1); font-size:18px; width:38px; height:40px;
+    cursor:pointer; transition:background .2s ease;
+  }
+  .qty-stepper button:hover{ background:var(--black-3); }
+  .qty-stepper input{
+    width:64px; text-align:center; background:var(--black); border:none; border-left:1px solid var(--line);
+    border-right:1px solid var(--line); color:var(--ivory); font-family:inherit; font-size:14.5px; height:40px;
+    -moz-appearance:textfield;
+  }
+  .qty-stepper input::-webkit-outer-spin-button, .qty-stepper input::-webkit-inner-spin-button{
+    -webkit-appearance:none; margin:0;
+  }
+  .p-addcart-btn{
+    width:100%; display:flex; align-items:center; justify-content:center; gap:10px;
+    background:var(--gold-grad); color:var(--black); font-weight:700; letter-spacing:0.06em;
+    font-size:13.5px; text-transform:uppercase; padding:15px 20px; border:none; border-radius:10px;
+    cursor:pointer; transition:all .25s ease;
+  }
+  .p-addcart-btn:hover{ transform:translateY(-2px); box-shadow:0 14px 34px -12px rgba(216,178,92,0.55); }
+  .p-addcart-btn svg{ width:18px; height:18px; }
+  .p-addcart-btn.added{ background:linear-gradient(135deg,#8fe3a1,#4caf6e); color:#0c1f0f; }
+
+  /* ---------- CART FAB + DRAWER ---------- */
+  .cart-fab{
+    position:fixed; left:26px; bottom:26px; z-index:60;
+    width:60px; height:60px; border-radius:50%;
+    background:var(--gold-grad); border:none; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 14px 34px -10px rgba(0,0,0,0.6);
+    transition:transform .25s ease;
+  }
+  .cart-fab:hover{ transform:translateY(-3px) scale(1.04); }
+  .cart-fab svg{ width:26px; height:26px; color:var(--black); }
+  .cart-fab.hidden{ display:none; }
+  .cart-count{
+    position:absolute; top:-4px; right:-4px; background:#c0392b; color:#fff;
+    font-size:11px; font-weight:700; min-width:20px; height:20px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; padding:0 4px;
+    border:2px solid var(--black);
+  }
+  .cart-overlay{
+    position:fixed; inset:0; z-index:200; background:rgba(6,5,4,0.72);
+    backdrop-filter:blur(6px); display:none; align-items:stretch; justify-content:flex-end;
+  }
+  .cart-overlay.open{ display:flex; }
+  .cart-panel{
+    width:min(440px, 100%); height:100%; background:var(--black-2);
+    border-left:1px solid var(--line); display:flex; flex-direction:column;
+    animation:slideInCart .35s ease;
+  }
+  @keyframes slideInCart{ from{ transform:translateX(40px); opacity:0; } to{ transform:translateX(0); opacity:1; } }
+  .cart-header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:24px 26px; border-bottom:1px solid var(--line);
+  }
+  .cart-header h3{ font-size:19px; color:var(--ivory); font-weight:600; letter-spacing:0.02em; }
+  .cart-header button{
+    background:none; border:1px solid var(--line); color:var(--ivory); width:34px; height:34px;
+    border-radius:50%; cursor:pointer; font-size:18px; line-height:1;
+  }
+  .cart-items{ flex:1; overflow-y:auto; padding:10px 26px; }
+  .cart-empty{ text-align:center; color:var(--grey); padding:60px 10px; font-size:14px; }
+  .cart-item{
+    display:flex; gap:14px; padding:18px 0; border-bottom:1px solid var(--line);
+  }
+  .cart-item img{ width:64px; height:64px; object-fit:contain; background:#161310; border-radius:8px; flex-shrink:0; }
+  .cart-item-info{ flex:1; min-width:0; }
+  .cart-item-info .name{ color:var(--ivory); font-size:14.5px; font-weight:600; margin-bottom:3px; }
+  .cart-item-info .model{ color:var(--gold-2); font-size:11px; letter-spacing:0.05em; margin-bottom:6px; display:block; }
+  .cart-item-info .tags{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+  .cart-item-info .tag{
+    font-size:10.5px; background:rgba(216,178,92,0.1); border:1px solid var(--line); color:var(--grey);
+    padding:3px 8px; border-radius:20px;
+  }
+  .cart-item-controls{ display:flex; align-items:center; justify-content:space-between; }
+  .cart-item-controls .qty-stepper{ width:110px; }
+  .cart-item-controls .qty-stepper button{ width:30px; height:32px; font-size:15px; }
+  .cart-item-controls .qty-stepper input{ height:32px; width:44px; font-size:13px; }
+  .cart-remove{
+    background:none; border:none; color:var(--grey); cursor:pointer; font-size:12.5px;
+    text-decoration:underline; text-underline-offset:3px;
+  }
+  .cart-remove:hover{ color:#c0392b; }
+  .cart-footer{ padding:22px 26px 26px; border-top:1px solid var(--line); }
+  .cart-footer .cart-total-line{
+    display:flex; justify-content:space-between; color:var(--grey); font-size:13px; margin-bottom:16px;
+  }
+  .cart-footer .cart-total-line strong{ color:var(--ivory); font-weight:600; }
+
+  /* ---------- CONTACT DETAILS MODAL ---------- */
+  .contact-overlay{
+    position:fixed; inset:0; z-index:220; background:rgba(6,5,4,0.82);
+    backdrop-filter:blur(6px); display:none; align-items:center; justify-content:center; padding:20px;
+  }
+  .contact-overlay.open{ display:flex; }
+  .contact-panel{
+    width:min(420px, 100%); background:var(--black-2); border:1px solid var(--line);
+    border-radius:16px; padding:34px 30px; animation:slideInCart .3s ease;
+  }
+  .contact-panel h3{ color:var(--ivory); font-size:20px; margin-bottom:8px; }
+  .contact-panel p{ color:var(--grey); font-size:13.5px; margin-bottom:22px; line-height:1.5; }
+  .contact-field{ margin-bottom:16px; }
+  .contact-field label{
+    display:block; font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--grey); margin-bottom:8px;
+  }
+  .contact-field input{
+    width:100%; background:var(--black); border:1px solid var(--line); color:var(--ivory);
+    font-family:inherit; font-size:14.5px; padding:12px 14px; border-radius:8px;
+  }
+  .contact-field input:focus{ outline:none; border-color:var(--gold-2); }
+  .contact-error{ color:#e0725f; font-size:12.5px; margin-bottom:14px; min-height:16px; }
+  .contact-btn-row{ display:flex; gap:12px; margin-top:6px; }
+  .contact-btn-row .p-addcart-btn{ flex:1; }
+  .contact-cancel-btn{
+    flex:0 0 auto; background:none; border:1px solid var(--line); color:var(--grey);
+    padding:15px 20px; border-radius:10px; cursor:pointer; font-size:13.5px;
+  }
+  .contact-cancel-btn:hover{ color:var(--ivory); border-color:var(--gold-2); }
+  @media(max-width:480px){
+    .cart-panel{ width:100%; }
+  }
   .p-modal-body .p-cat{ font-size:11px; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold-2); margin-bottom:14px; display:block; }
   .p-modal-body h3{ font-size:28px; color:var(--ivory); margin-bottom:4px; letter-spacing:0.02em; }
   .p-modal-body .p-model{ font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--grey); font-size:16px; margin-bottom:24px; display:block; }
@@ -751,10 +896,72 @@
       <h3 id="pModalName"></h3>
       <span class="p-model" id="pModalModel"></span>
       <div class="p-spec-list" id="pModalSpecs"></div>
-      <button class="p-enquire-btn" id="pModalEnquire">
+
+      <div class="p-configurator" id="pConfigurator">
+        <div class="cfg-field" id="cfgWattageField">
+          <label>Wattage</label>
+          <select id="pWattageSelect"></select>
+        </div>
+        <div class="cfg-field" id="cfgCctField">
+          <label>Colour Temperature (CCT)</label>
+          <select id="pCctSelect"></select>
+        </div>
+        <div class="cfg-field cfg-qty-field">
+          <label>Quantity</label>
+          <div class="qty-stepper">
+            <button type="button" id="pQtyMinus" aria-label="Decrease quantity">&minus;</button>
+            <input type="number" id="pQtyInput" min="1" value="1">
+            <button type="button" id="pQtyPlus" aria-label="Increase quantity">&plus;</button>
+          </div>
+        </div>
+      </div>
+
+      <button class="p-addcart-btn" id="pAddToCartBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span id="pAddCartLabel">Add to Enquiry List</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<button class="cart-fab" id="cartFab" aria-label="Open enquiry list">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+  <span class="cart-count" id="cartCount" style="display:none;">0</span>
+</button>
+
+<div class="cart-overlay" id="cartOverlay">
+  <div class="cart-panel">
+    <div class="cart-header">
+      <h3>Your Enquiry List</h3>
+      <button id="cartClose" aria-label="Close">&times;</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer">
+      <div class="cart-total-line"><span>Total items</span><strong id="cartTotalCount">0</strong></div>
+      <button class="p-addcart-btn" id="cartCheckoutBtn">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.36 5.07L2 22l5.1-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.6 0-3.1-.43-4.4-1.18l-.31-.18-3.02.79.81-2.95-.2-.3A7.94 7.94 0 0 1 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8zm4.4-5.9c-.24-.12-1.43-.71-1.65-.79-.22-.08-.38-.12-.54.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.92-1.18-.71-.63-1.19-1.42-1.33-1.66-.14-.24-.01-.37.11-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.19-.46-.39-.4-.54-.41-.14 0-.3-.01-.46-.01s-.42.06-.64.3c-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.43-.58 1.63-1.15.2-.56.2-1.04.14-1.15-.06-.1-.22-.16-.46-.28z"/></svg>
         Enquire on WhatsApp
       </button>
+    </div>
+  </div>
+</div>
+
+<div class="contact-overlay" id="contactOverlay">
+  <div class="contact-panel">
+    <h3>Almost done!</h3>
+    <p>Share your name and contact number so our team can reach you with pricing and availability.</p>
+    <div class="contact-field">
+      <label>Your Name</label>
+      <input type="text" id="custName" placeholder="e.g. Rahul Sharma">
+    </div>
+    <div class="contact-field">
+      <label>Contact Number</label>
+      <input type="tel" id="custPhone" placeholder="e.g. 98765 43210">
+    </div>
+    <div class="contact-error" id="contactError"></div>
+    <div class="contact-btn-row">
+      <button class="contact-cancel-btn" id="contactCancelBtn">Cancel</button>
+      <button class="p-addcart-btn" id="contactSubmitBtn">Send on WhatsApp</button>
     </div>
   </div>
 </div>
@@ -934,111 +1141,111 @@
 
 <script>
   var AURAFIT_PRODUCTS = [
-    { id:'p-05', thumb:'assets/products/QT-101/thumb.jpg', images:['assets/products/QT-101/1.jpg','assets/products/QT-101/2.jpg','assets/products/QT-101/3.jpg','assets/products/QT-101/4.jpg','assets/products/QT-101/5.jpg','assets/products/QT-101/6.jpg','assets/products/QT-101/7.jpg','assets/products/QT-101/8.jpg'], name:'Delta', model:'QT-101', category:'COB Spot Light',
+    { id:'p-05', thumb:'assets/products/AU-101/thumb.jpg', images:['assets/products/AU-101/1.jpg','assets/products/AU-101/2.jpg','assets/products/AU-101/3.jpg','assets/products/AU-101/4.jpg','assets/products/AU-101/5.jpg','assets/products/AU-101/6.jpg','assets/products/AU-101/7.jpg','assets/products/AU-101/8.jpg'], name:'Delta', model:'AU-101', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W / 18W'],['Dimensions (W×H)','63×61mm / 84×79mm / 93×87mm'],['Cut Out','55mm / 75mm / 85mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','>80'],['Body Colour','Black, White']] },
-    { id:'p-06', thumb:'assets/products/QT-102/thumb.jpg', images:['assets/products/QT-102/1.jpg','assets/products/QT-102/2.jpg','assets/products/QT-102/3.jpg','assets/products/QT-102/4.jpg','assets/products/QT-102/5.jpg','assets/products/QT-102/6.jpg','assets/products/QT-102/7.jpg','assets/products/QT-102/8.jpg'], name:'Glow', model:'QT-102', category:'COB Spot Light',
+    { id:'p-06', thumb:'assets/products/AU-102/thumb.jpg', images:['assets/products/AU-102/1.jpg','assets/products/AU-102/2.jpg','assets/products/AU-102/3.jpg','assets/products/AU-102/4.jpg','assets/products/AU-102/5.jpg','assets/products/AU-102/6.jpg','assets/products/AU-102/7.jpg','assets/products/AU-102/8.jpg'], name:'Glow', model:'AU-102', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W / 18W'],['Dimensions (W×H)','71×50mm / 85×58mm / 95×74mm'],['Cut Out','65mm / 80mm / 90mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','>80'],['Body Colour','Black, White'],['Reflector Colour','Black, White, Rose Gold']] },
-    { id:'p-07', thumb:'assets/products/QT-103/thumb.jpg', images:['assets/products/QT-103/1.jpg','assets/products/QT-103/2.jpg','assets/products/QT-103/3.jpg','assets/products/QT-103/4.jpg','assets/products/QT-103/5.jpg','assets/products/QT-103/6.jpg','assets/products/QT-103/7.jpg','assets/products/QT-103/8.jpg'], name:'Delta+', model:'QT-103', category:'COB Spot Light',
+    { id:'p-07', thumb:'assets/products/AU-103/thumb.jpg', images:['assets/products/AU-103/1.jpg','assets/products/AU-103/2.jpg','assets/products/AU-103/3.jpg','assets/products/AU-103/4.jpg','assets/products/AU-103/5.jpg','assets/products/AU-103/6.jpg','assets/products/AU-103/7.jpg','assets/products/AU-103/8.jpg'], name:'Delta+', model:'AU-103', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W / 18W'],['Dimensions (W×H)','75×63mm / 85×76mm / 95×91mm'],['Cut Out','65mm / 75mm / 85mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','>80'],['Body Colour','Black, White'],['Reflector Colour','Black, Rose Gold']] },
-    { id:'p-08', thumb:'assets/products/QT-105/thumb.jpg', images:['assets/products/QT-105/1.jpg','assets/products/QT-105/2.jpg','assets/products/QT-105/3.jpg','assets/products/QT-105/4.jpg','assets/products/QT-105/5.jpg','assets/products/QT-105/6.jpg','assets/products/QT-105/7.jpg','assets/products/QT-105/8.jpg'], name:'Sphere', model:'QT-105', category:'COB Spot Light',
+    { id:'p-08', thumb:'assets/products/AU-105/thumb.jpg', images:['assets/products/AU-105/1.jpg','assets/products/AU-105/2.jpg','assets/products/AU-105/3.jpg','assets/products/AU-105/4.jpg','assets/products/AU-105/5.jpg','assets/products/AU-105/6.jpg','assets/products/AU-105/7.jpg','assets/products/AU-105/8.jpg'], name:'Sphere', model:'AU-105', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W / 18W'],['Dimensions (W×H)','60×42mm / 80×50mm / 110×62mm'],['Cut Out','55mm / 75mm / 95mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','>80'],['Body Colour','Black, White']] },
-    { id:'p-09', thumb:'assets/products/QT-106/thumb.jpg', images:['assets/products/QT-106/1.jpg','assets/products/QT-106/2.jpg','assets/products/QT-106/3.jpg','assets/products/QT-106/4.jpg','assets/products/QT-106/5.jpg','assets/products/QT-106/6.jpg','assets/products/QT-106/7.jpg','assets/products/QT-106/8.jpg'], name:'Prism', model:'QT-106', category:'COB Spot Light',
+    { id:'p-09', thumb:'assets/products/AU-106/thumb.jpg', images:['assets/products/AU-106/1.jpg','assets/products/AU-106/2.jpg','assets/products/AU-106/3.jpg','assets/products/AU-106/4.jpg','assets/products/AU-106/5.jpg','assets/products/AU-106/6.jpg','assets/products/AU-106/7.jpg','assets/products/AU-106/8.jpg'], name:'Prism', model:'AU-106', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W'],['Dimensions (W×H)','80×45mm'],['Cut Out','75mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','>80'],['Body Colour','Grey-Black, White']] },
-    { id:'p-10', thumb:'assets/products/QT-107/thumb.jpg', images:['assets/products/QT-107/1.jpg','assets/products/QT-107/2.jpg','assets/products/QT-107/3.jpg','assets/products/QT-107/4.jpg','assets/products/QT-107/5.jpg','assets/products/QT-107/6.jpg','assets/products/QT-107/7.jpg','assets/products/QT-107/8.jpg'], name:'Nova', model:'QT-107', category:'COB Spot Light',
+    { id:'p-10', thumb:'assets/products/AU-107/thumb.jpg', images:['assets/products/AU-107/1.jpg','assets/products/AU-107/2.jpg','assets/products/AU-107/3.jpg','assets/products/AU-107/4.jpg','assets/products/AU-107/5.jpg','assets/products/AU-107/6.jpg','assets/products/AU-107/7.jpg','assets/products/AU-107/8.jpg'], name:'Nova', model:'AU-107', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W / 18W'],['Dimensions (W×H)','62×60mm / 85×62mm / 105×72mm'],['Cut Out','55mm / 75mm / 95mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','>80'],['Body Colour','Black, White'],['Reflector Colour','Black, White, Matte Black, Rose Gold']] },
-    { id:'p-50', thumb:'assets/products/QT-202/thumb.jpg', images:['assets/products/QT-202/1.jpg','assets/products/QT-202/2.jpg','assets/products/QT-202/3.jpg','assets/products/QT-202/4.jpg','assets/products/QT-202/5.jpg','assets/products/QT-202/6.jpg','assets/products/QT-202/7.jpg','assets/products/QT-202/8.jpg'], name:'Ray', model:'QT-202', category:'Flat Down Light',
+    { id:'p-50', thumb:'assets/products/AU-202/thumb.jpg', images:['assets/products/AU-202/1.jpg','assets/products/AU-202/2.jpg','assets/products/AU-202/3.jpg','assets/products/AU-202/4.jpg','assets/products/AU-202/5.jpg','assets/products/AU-202/6.jpg','assets/products/AU-202/7.jpg','assets/products/AU-202/8.jpg'], name:'Ray', model:'AU-202', category:'Flat Down Light',
       specs:[['Wattage','16W / 24W'],['Dimensions (W×H)','120×28mm / 170×28mm'],['Cut Out','105mm / 155mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','120°'],['CRI','>80'],['Body Colour','White']] },
-    { id:'p-51', thumb:'assets/products/QT-203/thumb.jpg', images:['assets/products/QT-203/1.jpg','assets/products/QT-203/2.jpg','assets/products/QT-203/3.jpg','assets/products/QT-203/4.jpg','assets/products/QT-203/5.jpg','assets/products/QT-203/6.jpg','assets/products/QT-203/7.jpg','assets/products/QT-203/8.jpg'], name:'Blaze', model:'QT-203', category:'Pro Down Light',
+    { id:'p-51', thumb:'assets/products/AU-203/thumb.jpg', images:['assets/products/AU-203/1.jpg','assets/products/AU-203/2.jpg','assets/products/AU-203/3.jpg','assets/products/AU-203/4.jpg','assets/products/AU-203/5.jpg','assets/products/AU-203/6.jpg','assets/products/AU-203/7.jpg','assets/products/AU-203/8.jpg'], name:'Blaze', model:'AU-203', category:'Pro Down Light',
       specs:[['Wattage','12W / 18W / 24W'],['Dimensions (W×H)','100×50mm / 130×50mm / 150×50mm'],['Cut Out','95mm / 125mm / 145mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','120°'],['CRI','>80'],['Body Colour','Black, White'],['Reflector Colour','Black, White, Rose Gold']] },
-    { id:'p-52', thumb:'assets/products/QT-204/thumb.jpg', images:['assets/products/QT-204/1.jpg'], name:'Cubbo', model:'QT-204', category:'Mini Down Light',
+    { id:'p-52', thumb:'assets/products/AU-204/thumb.jpg', images:['assets/products/AU-204/1.jpg'], name:'Cubbo', model:'AU-204', category:'Mini Down Light',
       specs:[['Wattage','12W / 18W'],['Dimensions (W×H)','85×48mm / 105×54mm'],['Cut Out','75mm / 95mm'],['CCT','3000K / 4000K / 5000K / 6500K'],['Beam Angle','38°'],['CRI','>80'],['Body Colour','Black, White']] },
-    { id:'p-55', thumb:'assets/products/QT-401/thumb.jpg', images:['assets/products/QT-401/1.jpg','assets/products/QT-401/2.jpg','assets/products/QT-401/3.jpg','assets/products/QT-401/4.jpg','assets/products/QT-401/5.jpg','assets/products/QT-401/6.jpg','assets/products/QT-401/7.jpg','assets/products/QT-401/8.jpg'], name:'Fluoro', model:'QT-401', category:'Surface Cylinder',
+    { id:'p-55', thumb:'assets/products/AU-401/thumb.jpg', images:['assets/products/AU-401/1.jpg','assets/products/AU-401/2.jpg','assets/products/AU-401/3.jpg','assets/products/AU-401/4.jpg','assets/products/AU-401/5.jpg','assets/products/AU-401/6.jpg','assets/products/AU-401/7.jpg','assets/products/AU-401/8.jpg'], name:'Fluoro', model:'AU-401', category:'Surface Cylinder',
       specs:[['Wattage','7W / 12W'],['Dimensions (W×H)','60×70mm / 73×90mm'],['CCT','3000K / 4000K / 5000K / 6500K / 3-in-1'],['Beam Angle','36°'],['CRI','>80'],['Body Colour','Black, White'],['Reflector Colour','Black, Gold']] },
-    { id:'p-56', thumb:'assets/products/QT-402/thumb.jpg', images:['assets/products/QT-402/1.jpg','assets/products/QT-402/2.jpg','assets/products/QT-402/3.jpg','assets/products/QT-402/4.jpg','assets/products/QT-402/5.jpg','assets/products/QT-402/6.jpg','assets/products/QT-402/7.jpg','assets/products/QT-402/8.jpg'], name:'Glow X', model:'QT-402', category:'Surface Cylinder',
+    { id:'p-56', thumb:'assets/products/AU-402/thumb.jpg', images:['assets/products/AU-402/1.jpg','assets/products/AU-402/2.jpg','assets/products/AU-402/3.jpg','assets/products/AU-402/4.jpg','assets/products/AU-402/5.jpg','assets/products/AU-402/6.jpg','assets/products/AU-402/7.jpg','assets/products/AU-402/8.jpg'], name:'Glow X', model:'AU-402', category:'Surface Cylinder',
       specs:[['Wattage','7W / 12W / 18W'],['Dimensions (W×H)','63×80mm / 78×90mm / 88×100mm'],['CCT','3000K / 4000K / 5000K / 6500K / 3-in-1'],['Beam Angle','36°'],['CRI','>80'],['Body Colour','Black, White'],['Reflector Colour','Black, White, Rose Gold']] },
-    { id:'p-57', thumb:'assets/products/QT-403/thumb.jpg', images:['assets/products/QT-403/1.jpg','assets/products/QT-403/2.jpg','assets/products/QT-403/3.jpg','assets/products/QT-403/4.jpg','assets/products/QT-403/5.jpg'], name:'Glow Axis', model:'QT-403', category:'Surface Cylinder',
+    { id:'p-57', thumb:'assets/products/AU-403/thumb.jpg', images:['assets/products/AU-403/1.jpg','assets/products/AU-403/2.jpg','assets/products/AU-403/3.jpg','assets/products/AU-403/4.jpg','assets/products/AU-403/5.jpg'], name:'Glow Axis', model:'AU-403', category:'Surface Cylinder',
       specs:[['Wattage','7W / 12W / 18W'],['Dimensions (W×H)','59×81mm / 73×90mm / 87×110mm'],['CCT','3000K / 4000K / 5000K / 6500K / 3-in-1'],['Beam Angle','36°'],['CRI','>80'],['Body Colour','Black'],['Reflector Colour','Black']] },
-    { id:'p-58', thumb:'assets/products/QT-404/thumb.jpg', images:['assets/products/QT-404/1.jpg','assets/products/QT-404/2.jpg','assets/products/QT-404/3.jpg','assets/products/QT-404/4.jpg','assets/products/QT-404/5.jpg','assets/products/QT-404/6.jpg','assets/products/QT-404/7.jpg','assets/products/QT-404/8.jpg'], name:'Minicam', model:'QT-404', category:'Surface Cylinder',
+    { id:'p-58', thumb:'assets/products/AU-404/thumb.jpg', images:['assets/products/AU-404/1.jpg','assets/products/AU-404/2.jpg','assets/products/AU-404/3.jpg','assets/products/AU-404/4.jpg','assets/products/AU-404/5.jpg','assets/products/AU-404/6.jpg','assets/products/AU-404/7.jpg','assets/products/AU-404/8.jpg'], name:'Minicam', model:'AU-404', category:'Surface Cylinder',
       specs:[['Wattage','12W'],['Dimensions (W×H)','82×65mm'],['CCT','3000K / 4000K / 5000K / 6500K / 3-in-1'],['Beam Angle','36°'],['CRI','>80 (90 available on request)'],['Body Colour','Black, Grey'],['Reflector Colour','Matte Black']] },
-    { id:'p-59', thumb:'assets/products/QT-114/thumb.jpg', images:['assets/products/QT-114/1.jpg','assets/products/QT-114/2.jpg','assets/products/QT-114/3.jpg','assets/products/QT-114/4.jpg','assets/products/QT-114/5.jpg','assets/products/QT-114/6.jpg','assets/products/QT-114/7.jpg','assets/products/QT-114/8.jpg'], name:'Quartz', model:'QT-114', category:'COB Spot Light',
+    { id:'p-59', thumb:'assets/products/AU-114/thumb.jpg', images:['assets/products/AU-114/1.jpg','assets/products/AU-114/2.jpg','assets/products/AU-114/3.jpg','assets/products/AU-114/4.jpg','assets/products/AU-114/5.jpg','assets/products/AU-114/6.jpg','assets/products/AU-114/7.jpg','assets/products/AU-114/8.jpg'], name:'Quartz', model:'AU-114', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W'],['Dimensions (W×H)','63×75mm / 63×75mm'],['Cut Out','55mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','>80 (90 available on request)'],['Body Colour','Black, White'],['Reflector Colour','Grey-Black, Matte Black']] },
-    { id:'p-60', thumb:'assets/products/QT-115/thumb.jpg', images:['assets/products/QT-115/1.jpg','assets/products/QT-115/2.jpg','assets/products/QT-115/3.jpg','assets/products/QT-115/4.jpg','assets/products/QT-115/5.jpg','assets/products/QT-115/6.jpg','assets/products/QT-115/7.jpg','assets/products/QT-115/8.jpg'], name:'Clavis', model:'QT-115', category:'COB Spot Light',
+    { id:'p-60', thumb:'assets/products/AU-115/thumb.jpg', images:['assets/products/AU-115/1.jpg','assets/products/AU-115/2.jpg','assets/products/AU-115/3.jpg','assets/products/AU-115/4.jpg','assets/products/AU-115/5.jpg','assets/products/AU-115/6.jpg','assets/products/AU-115/7.jpg','assets/products/AU-115/8.jpg'], name:'Clavis', model:'AU-115', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W'],['Dimensions (W×H)','60×50mm / 85×55mm'],['Cut Out','55mm / 75mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','>80 (90 available on request)'],['Body Colour','White']] },
-    { id:'p-61', thumb:'assets/products/QT-116/thumb.jpg', images:['assets/products/QT-116/1.jpg','assets/products/QT-116/2.jpg','assets/products/QT-116/3.jpg','assets/products/QT-116/4.jpg','assets/products/QT-116/5.jpg','assets/products/QT-116/6.jpg','assets/products/QT-116/7.jpg','assets/products/QT-116/8.jpg'], name:'Pixo', model:'QT-116', category:'COB Spot Light',
+    { id:'p-61', thumb:'assets/products/AU-116/thumb.jpg', images:['assets/products/AU-116/1.jpg','assets/products/AU-116/2.jpg','assets/products/AU-116/3.jpg','assets/products/AU-116/4.jpg','assets/products/AU-116/5.jpg','assets/products/AU-116/6.jpg','assets/products/AU-116/7.jpg','assets/products/AU-116/8.jpg'], name:'Pixo', model:'AU-116', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W'],['Dimensions (W×H)','65×58mm / 82×64mm'],['Cut Out','55mm / 75mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','>80 (90 available on request)'],['Body Colour','Black, White']] },
-    { id:'p-62', thumb:'assets/products/QT-117/thumb.jpg', images:['assets/products/QT-117/1.jpg','assets/products/QT-117/2.jpg','assets/products/QT-117/3.jpg','assets/products/QT-117/4.jpg','assets/products/QT-117/5.jpg','assets/products/QT-117/6.jpg','assets/products/QT-117/7.jpg','assets/products/QT-117/8.jpg'], name:'Delta Pro', model:'QT-117', category:'COB Spot Light',
+    { id:'p-62', thumb:'assets/products/AU-117/thumb.jpg', images:['assets/products/AU-117/1.jpg','assets/products/AU-117/2.jpg','assets/products/AU-117/3.jpg','assets/products/AU-117/4.jpg','assets/products/AU-117/5.jpg','assets/products/AU-117/6.jpg','assets/products/AU-117/7.jpg','assets/products/AU-117/8.jpg'], name:'Delta Pro', model:'AU-117', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W / 18W'],['Dimensions (W×H)','51×53mm / 63×54mm / 83×70mm'],['Cut Out','45mm / 55mm / 75mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','>80 (90 available on request)'],['Body Colour','Black, White']] },
-    { id:'p-63', thumb:'assets/products/QT-118/thumb.jpg', images:['assets/products/QT-118/1.jpg','assets/products/QT-118/2.jpg','assets/products/QT-118/3.jpg','assets/products/QT-118/4.jpg','assets/products/QT-118/5.jpg','assets/products/QT-118/6.jpg','assets/products/QT-118/7.jpg','assets/products/QT-118/8.jpg'], name:'Wave', model:'QT-118', category:'COB Spot Light',
+    { id:'p-63', thumb:'assets/products/AU-118/thumb.jpg', images:['assets/products/AU-118/1.jpg','assets/products/AU-118/2.jpg','assets/products/AU-118/3.jpg','assets/products/AU-118/4.jpg','assets/products/AU-118/5.jpg','assets/products/AU-118/6.jpg','assets/products/AU-118/7.jpg','assets/products/AU-118/8.jpg'], name:'Wave', model:'AU-118', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W'],['Dimensions (W×H)','82×66mm'],['Cut Out','75mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','>80 (90 available on request)'],['Body Colour','Black, White'],['Reflector Colour','Matte Black, Matte White']] },
-    { id:'p-64', thumb:'assets/products/QT-119/thumb.jpg', images:['assets/products/QT-119/1.jpg','assets/products/QT-119/2.jpg','assets/products/QT-119/3.jpg'], name:'Movable', model:'QT-119', category:'COB Spot Light',
+    { id:'p-64', thumb:'assets/products/AU-119/thumb.jpg', images:['assets/products/AU-119/1.jpg','assets/products/AU-119/2.jpg','assets/products/AU-119/3.jpg'], name:'Movable', model:'AU-119', category:'COB Spot Light',
       specs:[['Wattage','30W / 50W'],['Dimensions (W×H)','160×90mm / 160×105mm'],['Cut Out','145mm'],['CCT','3000K / 4000K / 5000K / 6500K'],['Beam Angle','36°'],['CRI','>80 (90 available on request)'],['Body Colour','White']] },
-    { id:'p-65', thumb:'assets/products/QT-122/thumb.jpg', images:['assets/products/QT-122/1.jpg','assets/products/QT-122/2.jpg','assets/products/QT-122/3.jpg','assets/products/QT-122/4.jpg','assets/products/QT-122/5.jpg','assets/products/QT-122/6.jpg','assets/products/QT-122/7.jpg','assets/products/QT-122/8.jpg'], name:'Sparo', model:'QT-122', category:'COB Spot Light',
+    { id:'p-65', thumb:'assets/products/AU-122/thumb.jpg', images:['assets/products/AU-122/1.jpg','assets/products/AU-122/2.jpg','assets/products/AU-122/3.jpg','assets/products/AU-122/4.jpg','assets/products/AU-122/5.jpg','assets/products/AU-122/6.jpg','assets/products/AU-122/7.jpg','assets/products/AU-122/8.jpg'], name:'Sparo', model:'AU-122', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W / 18W'],['Dimensions (W×H)','35×70mm / 45×78mm / 55×96mm'],['Cut Out','30mm / 40mm / 50mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','>80 (90 available on request)'],['Body Colour','Black, White']] },
-    { id:'p-66', thumb:'assets/products/QT-123/thumb.jpg', images:['assets/products/QT-123/1.jpg','assets/products/QT-123/2.jpg','assets/products/QT-123/3.jpg','assets/products/QT-123/4.jpg','assets/products/QT-123/5.jpg','assets/products/QT-123/6.jpg','assets/products/QT-123/7.jpg','assets/products/QT-123/8.jpg'], name:'Beam', model:'QT-123', category:'COB Spot Light',
+    { id:'p-66', thumb:'assets/products/AU-123/thumb.jpg', images:['assets/products/AU-123/1.jpg','assets/products/AU-123/2.jpg','assets/products/AU-123/3.jpg','assets/products/AU-123/4.jpg','assets/products/AU-123/5.jpg','assets/products/AU-123/6.jpg','assets/products/AU-123/7.jpg','assets/products/AU-123/8.jpg'], name:'Beam', model:'AU-123', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W'],['Dimensions (W×H)','60×76mm / 70×86mm'],['Cut Out','55mm / 65mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','>80 (90 available on request)'],['Body Colour','Black, White']] },
-    { id:'p-67', thumb:'assets/products/QT-124/thumb.jpg', images:['assets/products/QT-124/1.jpg','assets/products/QT-124/2.jpg','assets/products/QT-124/3.jpg','assets/products/QT-124/4.jpg','assets/products/QT-124/5.jpg','assets/products/QT-124/6.jpg','assets/products/QT-124/7.jpg','assets/products/QT-124/8.jpg'], name:'Spirit', model:'QT-124', category:'COB Spot Light',
+    { id:'p-67', thumb:'assets/products/AU-124/thumb.jpg', images:['assets/products/AU-124/1.jpg','assets/products/AU-124/2.jpg','assets/products/AU-124/3.jpg','assets/products/AU-124/4.jpg','assets/products/AU-124/5.jpg','assets/products/AU-124/6.jpg','assets/products/AU-124/7.jpg','assets/products/AU-124/8.jpg'], name:'Spirit', model:'AU-124', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W / 18W'],['Dimensions (W×H)','70×45mm / 80×50mm / 90×60mm'],['Cut Out','65mm / 75mm / 85mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','>80 (90 available on request)'],['Body Colour','Black, White']] },
-    { id:'p-68', thumb:'assets/products/QT-125/thumb.jpg', images:['assets/products/QT-125/1.jpg','assets/products/QT-125/2.jpg','assets/products/QT-125/3.jpg','assets/products/QT-125/4.jpg','assets/products/QT-125/5.jpg','assets/products/QT-125/6.jpg','assets/products/QT-125/7.jpg','assets/products/QT-125/8.jpg'], name:'Hide', model:'QT-125', category:'Pull Out',
+    { id:'p-68', thumb:'assets/products/AU-125/thumb.jpg', images:['assets/products/AU-125/1.jpg','assets/products/AU-125/2.jpg','assets/products/AU-125/3.jpg','assets/products/AU-125/4.jpg','assets/products/AU-125/5.jpg','assets/products/AU-125/6.jpg','assets/products/AU-125/7.jpg','assets/products/AU-125/8.jpg'], name:'Hide', model:'AU-125', category:'Pull Out',
       specs:[['Wattage','7W / 12W'],['Dimensions (W×H)','47×88mm / 60×94mm'],['Cut Out','40mm / 55mm'],['CCT','3000K / 4000K / 5000K / 6500K'],['Beam Angle','36°'],['CRI','>80 (90 available on request)'],['Body Colour','Black, White']] },
-    { id:'p-69', thumb:'assets/products/QT-126/thumb.jpg', images:['assets/products/QT-126/1.jpg','assets/products/QT-126/2.jpg','assets/products/QT-126/3.jpg','assets/products/QT-126/4.jpg','assets/products/QT-126/5.jpg','assets/products/QT-126/6.jpg','assets/products/QT-126/7.jpg','assets/products/QT-126/8.jpg'], name:'Shark', model:'QT-126', category:'COB Spot Light',
+    { id:'p-69', thumb:'assets/products/AU-126/thumb.jpg', images:['assets/products/AU-126/1.jpg','assets/products/AU-126/2.jpg','assets/products/AU-126/3.jpg','assets/products/AU-126/4.jpg','assets/products/AU-126/5.jpg','assets/products/AU-126/6.jpg','assets/products/AU-126/7.jpg','assets/products/AU-126/8.jpg'], name:'Shark', model:'AU-126', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W / 18W'],['Dimensions (W×H)','65×77mm / 85×97mm / 85×97mm'],['Cut Out','55mm / 75mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','>80 (90 available on request)'],['Body Colour','White'],['Reflector Colour','Grey-Black, White']] },
-    { id:'p-70', thumb:'assets/products/QT-127/thumb.jpg', images:['assets/products/QT-127/1.jpg','assets/products/QT-127/2.jpg','assets/products/QT-127/3.jpg','assets/products/QT-127/4.jpg','assets/products/QT-127/5.jpg','assets/products/QT-127/6.jpg','assets/products/QT-127/7.jpg','assets/products/QT-127/8.jpg'], name:'Ranger', model:'QT-127', category:'COB Spot Light',
+    { id:'p-70', thumb:'assets/products/AU-127/thumb.jpg', images:['assets/products/AU-127/1.jpg','assets/products/AU-127/2.jpg','assets/products/AU-127/3.jpg','assets/products/AU-127/4.jpg','assets/products/AU-127/5.jpg','assets/products/AU-127/6.jpg','assets/products/AU-127/7.jpg','assets/products/AU-127/8.jpg'], name:'Ranger', model:'AU-127', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W'],['Dimensions (W×H)','60×85mm'],['Cut Out','55mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','>80 (90 available on request)'],['Body Colour','White'],['Reflector Colour','Grey-Black, White']] },
-    { id:'p-71', thumb:'assets/products/QT-128/thumb.jpg', images:['assets/products/QT-128/1.jpg','assets/products/QT-128/2.jpg','assets/products/QT-128/3.jpg','assets/products/QT-128/4.jpg','assets/products/QT-128/5.jpg','assets/products/QT-128/6.jpg','assets/products/QT-128/7.jpg','assets/products/QT-128/8.jpg'], name:'Aura', model:'QT-128', category:'COB Spot Light',
+    { id:'p-71', thumb:'assets/products/AU-128/thumb.jpg', images:['assets/products/AU-128/1.jpg','assets/products/AU-128/2.jpg','assets/products/AU-128/3.jpg','assets/products/AU-128/4.jpg','assets/products/AU-128/5.jpg','assets/products/AU-128/6.jpg','assets/products/AU-128/7.jpg','assets/products/AU-128/8.jpg'], name:'Aura', model:'AU-128', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W'],['Dimensions (W×H)','60×62mm / 60×70mm'],['Cut Out','55mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','>80 (90 available on request)'],['Body Colour','White, Black, Rose Gold, Silver']] },
-    { id:'p-72', thumb:'assets/products/QT-129/thumb.jpg', images:['assets/products/QT-129/1.jpg','assets/products/QT-129/2.jpg','assets/products/QT-129/3.jpg','assets/products/QT-129/4.jpg','assets/products/QT-129/5.jpg','assets/products/QT-129/6.jpg'], name:'Crysta', model:'QT-129', category:'COB Spot Light',
+    { id:'p-72', thumb:'assets/products/AU-129/thumb.jpg', images:['assets/products/AU-129/1.jpg','assets/products/AU-129/2.jpg','assets/products/AU-129/3.jpg','assets/products/AU-129/4.jpg','assets/products/AU-129/5.jpg','assets/products/AU-129/6.jpg'], name:'Crysta', model:'AU-129', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W / 18W'],['Dimensions (W×H)','42×75mm / 52×90mm / 62×120mm'],['Cut Out','35mm / 45mm / 55mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','24°'],['CRI','>80 (90 available on request)'],['Body Colour','White'],['Reflector Colour','Grey-Black, White']] },
-    { id:'p-73', thumb:'assets/products/QT-130/thumb.jpg', images:['assets/products/QT-130/1.jpg','assets/products/QT-130/2.jpg','assets/products/QT-130/3.jpg','assets/products/QT-130/4.jpg','assets/products/QT-130/5.jpg','assets/products/QT-130/6.jpg','assets/products/QT-130/7.jpg','assets/products/QT-130/8.jpg'], name:'Vista', model:'QT-130', category:'COB Spot Light',
+    { id:'p-73', thumb:'assets/products/AU-130/thumb.jpg', images:['assets/products/AU-130/1.jpg','assets/products/AU-130/2.jpg','assets/products/AU-130/3.jpg','assets/products/AU-130/4.jpg','assets/products/AU-130/5.jpg','assets/products/AU-130/6.jpg','assets/products/AU-130/7.jpg','assets/products/AU-130/8.jpg'], name:'Vista', model:'AU-130', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W / 18W'],['Dimensions (W×H)','35×75mm / 45×90mm / 55×120mm'],['Cut Out','30mm / 40mm / 50mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','>80 (90 available on request)'],['Body Colour','White, Black, Grey-Black']] },
-    { thumb:'assets/products/QT-104/thumb.jpg', images:['assets/products/QT-104/1.jpg','assets/products/QT-104/2.jpg','assets/products/QT-104/3.jpg','assets/products/QT-104/4.jpg','assets/products/QT-104/5.jpg','assets/products/QT-104/6.jpg','assets/products/QT-104/7.jpg','assets/products/QT-104/8.jpg'], name:'Crest', model:'QT-104', category:'COB Spot Light',
+    { thumb:'assets/products/AU-104/thumb.jpg', images:['assets/products/AU-104/1.jpg','assets/products/AU-104/2.jpg','assets/products/AU-104/3.jpg','assets/products/AU-104/4.jpg','assets/products/AU-104/5.jpg','assets/products/AU-104/6.jpg','assets/products/AU-104/7.jpg','assets/products/AU-104/8.jpg'], name:'Crest', model:'AU-104', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W / 18W'],['Dimensions (W×H)','62×78mm / 72×78mm / 82×78mm'],['Cut Out','55mm / 65mm / 75mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','80 (90 available on request)'],['Body Colour','Black, White, Grey-Black']] },
-    { thumb:'assets/products/QT-108/thumb.jpg', images:['assets/products/QT-108/1.jpg','assets/products/QT-108/2.jpg','assets/products/QT-108/3.jpg','assets/products/QT-108/4.jpg','assets/products/QT-108/5.jpg','assets/products/QT-108/6.jpg','assets/products/QT-108/7.jpg','assets/products/QT-108/8.jpg'], name:'Orion', model:'QT-108', category:'COB Spot Light',
+    { thumb:'assets/products/AU-108/thumb.jpg', images:['assets/products/AU-108/1.jpg','assets/products/AU-108/2.jpg','assets/products/AU-108/3.jpg','assets/products/AU-108/4.jpg','assets/products/AU-108/5.jpg','assets/products/AU-108/6.jpg','assets/products/AU-108/7.jpg','assets/products/AU-108/8.jpg'], name:'Orion', model:'AU-108', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W / 18W'],['Dimensions (W×H)','65×45mm / 75×55mm / 95×57mm'],['Cut Out','60mm / 70mm / 85mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','80 (90 available on request)'],['Body Colour','Black, White, Grey-Black']] },
-    { thumb:'assets/products/QT-109/thumb.jpg', images:['assets/products/QT-109/1.jpg','assets/products/QT-109/2.jpg','assets/products/QT-109/3.jpg','assets/products/QT-109/4.jpg','assets/products/QT-109/5.jpg','assets/products/QT-109/6.jpg','assets/products/QT-109/7.jpg','assets/products/QT-109/8.jpg'], name:'Glanza', model:'QT-109', category:'COB Spot Light',
+    { thumb:'assets/products/AU-109/thumb.jpg', images:['assets/products/AU-109/1.jpg','assets/products/AU-109/2.jpg','assets/products/AU-109/3.jpg','assets/products/AU-109/4.jpg','assets/products/AU-109/5.jpg','assets/products/AU-109/6.jpg','assets/products/AU-109/7.jpg','assets/products/AU-109/8.jpg'], name:'Glanza', model:'AU-109', category:'COB Spot Light',
       specs:[['Wattage','12W (2 in 1)'],['Dimensions (W×H)','85×90mm'],['Cut Out','75mm'],['CCT','4000K'],['Beam Angle','36°'],['CRI','80'],['Body Colour','White']] },
-    { thumb:'assets/products/QT-110/thumb.jpg', images:['assets/products/QT-110/1.jpg','assets/products/QT-110/2.jpg','assets/products/QT-110/3.jpg','assets/products/QT-110/4.jpg','assets/products/QT-110/5.jpg','assets/products/QT-110/6.jpg','assets/products/QT-110/7.jpg','assets/products/QT-110/8.jpg'], name:'Mini', model:'QT-110', category:'COB Spot Light',
+    { thumb:'assets/products/AU-110/thumb.jpg', images:['assets/products/AU-110/1.jpg','assets/products/AU-110/2.jpg','assets/products/AU-110/3.jpg','assets/products/AU-110/4.jpg','assets/products/AU-110/5.jpg','assets/products/AU-110/6.jpg','assets/products/AU-110/7.jpg'], name:'Mini', model:'AU-110', category:'COB Spot Light',
       specs:[['Wattage','3W'],['Dimensions (W×H)','38×28mm'],['Cut Out','28mm'],['CCT','3000K / 4000K / 5000K / 6500K'],['Beam Angle','36°'],['CRI','80'],['Body Colour','Black, White, Rose Gold']] },
-    { thumb:'assets/products/QT-111/thumb.jpg', images:['assets/products/QT-111/1.jpg','assets/products/QT-111/2.jpg','assets/products/QT-111/3.jpg','assets/products/QT-111/4.jpg','assets/products/QT-111/5.jpg','assets/products/QT-111/6.jpg','assets/products/QT-111/7.jpg','assets/products/QT-111/8.jpg'], name:'Jazz', model:'QT-111', category:'COB Spot Light',
+    { thumb:'assets/products/AU-111/thumb.jpg', images:['assets/products/AU-111/1.jpg','assets/products/AU-111/2.jpg','assets/products/AU-111/3.jpg','assets/products/AU-111/4.jpg','assets/products/AU-111/5.jpg','assets/products/AU-111/6.jpg','assets/products/AU-111/7.jpg','assets/products/AU-111/8.jpg'], name:'Jazz', model:'AU-111', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W / 18W'],['Dimensions (W×H)','63×43mm / 80×44mm / 94×51mm'],['Cut Out','55mm / 75mm / 85mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','80 (90 available on request)'],['Body Colour','Black, White']] },
-    { thumb:'assets/products/QT-112/thumb.jpg', images:['assets/products/QT-112/1.jpg','assets/products/QT-112/2.jpg','assets/products/QT-112/3.jpg','assets/products/QT-112/4.jpg','assets/products/QT-112/5.jpg','assets/products/QT-112/6.jpg','assets/products/QT-112/7.jpg','assets/products/QT-112/8.jpg'], name:'Polo', model:'QT-112', category:'COB Spot Light',
+    { thumb:'assets/products/AU-112/thumb.jpg', images:['assets/products/AU-112/1.jpg','assets/products/AU-112/2.jpg','assets/products/AU-112/3.jpg','assets/products/AU-112/4.jpg','assets/products/AU-112/5.jpg','assets/products/AU-112/6.jpg','assets/products/AU-112/7.jpg','assets/products/AU-112/8.jpg'], name:'Polo', model:'AU-112', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W / 18W'],['Dimensions (W×H)','70×62mm / 83×66mm / 103×66mm'],['Cut Out','60mm / 75mm / 95mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','80 (90 available on request)'],['Body Colour','Black, White']] },
-    { thumb:'assets/products/QT-113/thumb.jpg', images:['assets/products/QT-113/1.jpg','assets/products/QT-113/2.jpg','assets/products/QT-113/3.jpg','assets/products/QT-113/4.jpg','assets/products/QT-113/5.jpg','assets/products/QT-113/6.jpg','assets/products/QT-113/7.jpg','assets/products/QT-113/8.jpg'], name:'Tornado', model:'QT-113', category:'COB Spot Light',
+    { thumb:'assets/products/AU-113/thumb.jpg', images:['assets/products/AU-113/1.jpg','assets/products/AU-113/2.jpg','assets/products/AU-113/3.jpg','assets/products/AU-113/4.jpg','assets/products/AU-113/5.jpg','assets/products/AU-113/6.jpg','assets/products/AU-113/7.jpg','assets/products/AU-113/8.jpg'], name:'Tornado', model:'AU-113', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W / 18W'],['Dimensions (W×H)','52×65mm / 62×75mm / 82×78mm'],['Cut Out','45mm / 55mm / 75mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','80 (90 available on request)'],['Body Colour','Black, White']] },
-    { thumb:'assets/products/QT-131/thumb.jpg', images:['assets/products/QT-131/1.jpg','assets/products/QT-131/2.jpg','assets/products/QT-131/3.jpg','assets/products/QT-131/4.jpg','assets/products/QT-131/5.jpg','assets/products/QT-131/6.jpg'], name:'Stellar', model:'QT-131', category:'COB Spot Light',
+    { thumb:'assets/products/AU-131/thumb.jpg', images:['assets/products/AU-131/1.jpg','assets/products/AU-131/2.jpg','assets/products/AU-131/3.jpg','assets/products/AU-131/4.jpg','assets/products/AU-131/5.jpg','assets/products/AU-131/6.jpg'], name:'Stellar', model:'AU-131', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W'],['Dimensions (W×H)','75×72mm'],['Cut Out','65mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','80 (90 available on request)'],['Body Colour','White'],['Reflector Colour','Black']] },
-    { thumb:'assets/products/QT-132/thumb.jpg', images:['assets/products/QT-132/1.jpg','assets/products/QT-132/2.jpg','assets/products/QT-132/3.jpg','assets/products/QT-132/4.jpg','assets/products/QT-132/5.jpg','assets/products/QT-132/6.jpg','assets/products/QT-132/7.jpg','assets/products/QT-132/8.jpg'], name:'Cobra', model:'QT-132', category:'COB Spot Light',
+    { thumb:'assets/products/AU-132/thumb.jpg', images:['assets/products/AU-132/1.jpg','assets/products/AU-132/2.jpg','assets/products/AU-132/3.jpg','assets/products/AU-132/4.jpg','assets/products/AU-132/5.jpg','assets/products/AU-132/6.jpg','assets/products/AU-132/7.jpg','assets/products/AU-132/8.jpg'], name:'Cobra', model:'AU-132', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W / 18W'],['Dimensions (W×H)','53×61mm / 63×78mm / 83×83mm'],['Cut Out','45mm / 55mm / 75mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','24° / 36° / 36°'],['CRI','80 (90 available on request)'],['Body Colour','White, Black']] },
-    { thumb:'assets/products/QT-133/thumb.jpg', images:['assets/products/QT-133/1.jpg','assets/products/QT-133/2.jpg','assets/products/QT-133/3.jpg','assets/products/QT-133/4.jpg','assets/products/QT-133/5.jpg','assets/products/QT-133/6.jpg','assets/products/QT-133/7.jpg','assets/products/QT-133/8.jpg'], name:'Spectra', model:'QT-133', category:'COB Spot Light',
+    { thumb:'assets/products/AU-133/thumb.jpg', images:['assets/products/AU-133/1.jpg','assets/products/AU-133/2.jpg','assets/products/AU-133/3.jpg','assets/products/AU-133/4.jpg','assets/products/AU-133/5.jpg','assets/products/AU-133/6.jpg','assets/products/AU-133/7.jpg','assets/products/AU-133/8.jpg'], name:'Spectra', model:'AU-133', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W / 18W'],['Dimensions (W×H)','60×56mm / 70×60mm / 80×70mm'],['Cut Out','55mm / 65mm / 75mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','24° / 36° / 36°'],['CRI','80 (90 available on request)'],['Body Colour','White, Black, Grey-Black']] },
-    { thumb:'assets/products/QT-134/thumb.jpg', images:['assets/products/QT-134/1.jpg','assets/products/QT-134/2.jpg','assets/products/QT-134/3.jpg','assets/products/QT-134/4.jpg','assets/products/QT-134/5.jpg','assets/products/QT-134/6.jpg','assets/products/QT-134/7.jpg','assets/products/QT-134/8.jpg'], name:'Aqua', model:'QT-134', category:'COB Spot Light',
+    { thumb:'assets/products/AU-134/thumb.jpg', images:['assets/products/AU-134/1.jpg','assets/products/AU-134/2.jpg','assets/products/AU-134/3.jpg','assets/products/AU-134/4.jpg','assets/products/AU-134/5.jpg','assets/products/AU-134/6.jpg','assets/products/AU-134/7.jpg','assets/products/AU-134/8.jpg'], name:'Aqua', model:'AU-134', category:'COB Spot Light',
       specs:[['Wattage','12W / 18W / 30W'],['Dimensions (W×H)','83×65mm / 103×75mm / 130×80mm'],['Cut Out','75mm / 95mm / 120mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','80 (90 available on request)'],['Body Colour','White, Black']] },
-    { thumb:'assets/products/QT-135/thumb.jpg', images:['assets/products/QT-135/1.jpg','assets/products/QT-135/2.jpg','assets/products/QT-135/3.jpg','assets/products/QT-135/4.jpg','assets/products/QT-135/5.jpg','assets/products/QT-135/6.jpg','assets/products/QT-135/7.jpg','assets/products/QT-135/8.jpg'], name:'Titan', model:'QT-135', category:'COB Spot Light',
+    { thumb:'assets/products/AU-135/thumb.jpg', images:['assets/products/AU-135/1.jpg','assets/products/AU-135/2.jpg','assets/products/AU-135/3.jpg','assets/products/AU-135/4.jpg','assets/products/AU-135/5.jpg','assets/products/AU-135/6.jpg','assets/products/AU-135/7.jpg','assets/products/AU-135/8.jpg'], name:'Titan', model:'AU-135', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W'],['Dimensions (W×H)','60×75mm / 88×82mm'],['Cut Out','55mm / 75mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','80 (90 available on request)'],['Body Colour','White'],['Reflector Colour','Grey-Black']] },
-    { thumb:'assets/products/QT-136/thumb.jpg', images:['assets/products/QT-136/1.jpg','assets/products/QT-136/2.jpg','assets/products/QT-136/3.jpg','assets/products/QT-136/4.jpg','assets/products/QT-136/5.jpg','assets/products/QT-136/6.jpg','assets/products/QT-136/7.jpg','assets/products/QT-136/8.jpg'], name:'Cliff', model:'QT-136', category:'COB Spot Light',
+    { thumb:'assets/products/AU-136/thumb.jpg', images:['assets/products/AU-136/1.jpg','assets/products/AU-136/2.jpg','assets/products/AU-136/3.jpg','assets/products/AU-136/4.jpg','assets/products/AU-136/5.jpg','assets/products/AU-136/6.jpg','assets/products/AU-136/7.jpg','assets/products/AU-136/8.jpg'], name:'Cliff', model:'AU-136', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W / 18W'],['Dimensions (W×H)','52×70mm / 62×80mm / 82×90mm'],['Cut Out','45mm / 55mm / 75mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','80 (90 available on request)'],['Body Colour','White']] },
-    { thumb:'assets/products/QT-137/thumb.jpg', images:['assets/products/QT-137/1.jpg','assets/products/QT-137/2.jpg','assets/products/QT-137/3.jpg','assets/products/QT-137/4.jpg','assets/products/QT-137/5.jpg','assets/products/QT-137/6.jpg','assets/products/QT-137/7.jpg','assets/products/QT-137/8.jpg'], name:'Photon', model:'QT-137', category:'COB Spot Light',
+    { thumb:'assets/products/AU-137/thumb.jpg', images:['assets/products/AU-137/1.jpg','assets/products/AU-137/2.jpg','assets/products/AU-137/3.jpg','assets/products/AU-137/4.jpg','assets/products/AU-137/5.jpg','assets/products/AU-137/6.jpg','assets/products/AU-137/7.jpg','assets/products/AU-137/8.jpg'], name:'Photon', model:'AU-137', category:'COB Spot Light',
       specs:[['Wattage','7W / 12W / 18W'],['Dimensions (W×H)','55×98mm / 55×98mm / 62×110mm'],['Cut Out','45mm / 45mm / 55mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','24° / 24° / 36°'],['CRI','80 (90 available on request)'],['Body Colour','White'],['Reflector Colour','Grey-Black']] },
-    { thumb:'assets/products/QT-138/thumb.jpg', images:['assets/products/QT-138/1.jpg','assets/products/QT-138/2.jpg','assets/products/QT-138/3.jpg','assets/products/QT-138/4.jpg','assets/products/QT-138/5.jpg','assets/products/QT-138/6.jpg','assets/products/QT-138/7.jpg','assets/products/QT-138/8.jpg'], name:'Matrix', model:'QT-138', category:'COB Spot Light',
+    { thumb:'assets/products/AU-138/thumb.jpg', images:['assets/products/AU-138/1.jpg','assets/products/AU-138/2.jpg','assets/products/AU-138/3.jpg','assets/products/AU-138/4.jpg','assets/products/AU-138/5.jpg','assets/products/AU-138/6.jpg','assets/products/AU-138/7.jpg','assets/products/AU-138/8.jpg'], name:'Matrix', model:'AU-138', category:'COB Spot Light',
       specs:[['Wattage','2×12W / 2×18W'],['Dimensions (W×H)','168×83×65mm / 210×105×75mm'],['Cut Out','150×70mm / 195×90mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','36°'],['CRI','80 (90 available on request)'],['Body Colour','White, Black'],['Reflector Colour','Grey-Black']] },
-    { thumb:'assets/products/QT-201/thumb.jpg', images:['assets/products/QT-201/1.jpg','assets/products/QT-201/2.jpg','assets/products/QT-201/3.jpg','assets/products/QT-201/4.jpg','assets/products/QT-201/5.jpg','assets/products/QT-201/6.jpg','assets/products/QT-201/7.jpg','assets/products/QT-201/8.jpg'], name:'Leo', model:'QT-201', category:'Deep Down Light',
+    { thumb:'assets/products/AU-201/thumb.jpg', images:['assets/products/AU-201/1.jpg','assets/products/AU-201/2.jpg','assets/products/AU-201/3.jpg','assets/products/AU-201/4.jpg','assets/products/AU-201/5.jpg','assets/products/AU-201/6.jpg','assets/products/AU-201/7.jpg','assets/products/AU-201/8.jpg'], name:'Leo', model:'AU-201', category:'Deep Down Light',
       specs:[['Wattage','12W / 18W / 24W'],['Dimensions (W×H)','120×50mm / 155×50mm / 175×50mm'],['Cut Out','105mm / 140mm / 160mm'],['CCT','3000K / 4000K / 5000K / 6500K / 2700-6500K (Tunable)'],['Beam Angle','120°'],['CRI','80'],['Body Colour','Black, White']] },
-    { thumb:'assets/products/QT-205/thumb.jpg', images:['assets/products/QT-205/1.jpg','assets/products/QT-205/2.jpg','assets/products/QT-205/3.jpg','assets/products/QT-205/4.jpg','assets/products/QT-205/5.jpg','assets/products/QT-205/6.jpg','assets/products/QT-205/7.jpg','assets/products/QT-205/8.jpg'], name:'Stylo', model:'QT-205', category:'Slim Down Light',
+    { thumb:'assets/products/AU-205/thumb.jpg', images:['assets/products/AU-205/1.jpg','assets/products/AU-205/2.jpg','assets/products/AU-205/3.jpg','assets/products/AU-205/4.jpg','assets/products/AU-205/5.jpg','assets/products/AU-205/6.jpg','assets/products/AU-205/7.jpg','assets/products/AU-205/8.jpg'], name:'Stylo', model:'AU-205', category:'Slim Down Light',
       specs:[['Wattage','12W / 18W / 24W'],['Dimensions (W×H)','117×33mm / 136×33mm / 157×33mm'],['Cut Out','110mm / 130mm / 150mm'],['CCT','3000K / 4000K / 5000K / 6500K'],['Beam Angle','120°'],['CRI','80'],['Body Colour','Black, White']] },
-    { thumb:'assets/products/QT-405/thumb.jpg', images:['assets/products/QT-405/1.jpg','assets/products/QT-405/2.jpg','assets/products/QT-405/3.jpg','assets/products/QT-405/4.jpg','assets/products/QT-405/5.jpg','assets/products/QT-405/6.jpg','assets/products/QT-405/7.jpg','assets/products/QT-405/8.jpg'], name:'Hazel', model:'QT-405', category:'Surface Cylinder',
+    { thumb:'assets/products/AU-405/thumb.jpg', images:['assets/products/AU-405/1.jpg','assets/products/AU-405/2.jpg','assets/products/AU-405/3.jpg','assets/products/AU-405/4.jpg','assets/products/AU-405/5.jpg','assets/products/AU-405/6.jpg','assets/products/AU-405/7.jpg','assets/products/AU-405/8.jpg'], name:'Hazel', model:'AU-405', category:'Surface Cylinder',
       specs:[['Wattage','7W / 12W / 18W'],['Dimensions (W×H)','53×60mm / 62×60mm / 75×75mm'],['CCT','3000K / 4000K / 5000K / 6500K / 3-in-1'],['Beam Angle','36°'],['CRI','80 (90 available on request)'],['Body Colour','Black'],['Reflector Colour','Matte Black']] },
-    { thumb:'assets/products/QT-501/thumb.jpg', images:['assets/products/QT-501/1.jpg','assets/products/QT-501/2.jpg','assets/products/QT-501/3.jpg','assets/products/QT-501/4.jpg','assets/products/QT-501/5.jpg','assets/products/QT-501/6.jpg','assets/products/QT-501/7.jpg','assets/products/QT-501/8.jpg'], name:'Evoq', model:'QT-501', category:'Linear Light',
+    { thumb:'assets/products/AU-501/thumb.jpg', images:['assets/products/AU-501/1.jpg','assets/products/AU-501/2.jpg','assets/products/AU-501/3.jpg','assets/products/AU-501/4.jpg','assets/products/AU-501/5.jpg','assets/products/AU-501/6.jpg','assets/products/AU-501/7.jpg','assets/products/AU-501/8.jpg'], name:'Evoq', model:'AU-501', category:'Linear Light',
       specs:[['Wattage','10W'],['Dimensions','148×45×32mm'],['Cut Out','139×37mm'],['CCT','3000K / 4000K / 5000K / 6500K / 3-in-1, 2700-6500K (Tunable)'],['CRI','80'],['Body Colour','Black, White'],['Reflector Colour','Grey-Black']] },
-    { thumb:'assets/products/QT-502/thumb.jpg', images:['assets/products/QT-502/1.jpg','assets/products/QT-502/2.jpg','assets/products/QT-502/3.jpg','assets/products/QT-502/4.jpg','assets/products/QT-502/5.jpg','assets/products/QT-502/6.jpg','assets/products/QT-502/7.jpg','assets/products/QT-502/8.jpg'], name:'Rio', model:'QT-502', category:'Linear Light',
+    { thumb:'assets/products/AU-502/thumb.jpg', images:['assets/products/AU-502/1.jpg','assets/products/AU-502/2.jpg','assets/products/AU-502/3.jpg','assets/products/AU-502/4.jpg','assets/products/AU-502/5.jpg','assets/products/AU-502/6.jpg','assets/products/AU-502/7.jpg','assets/products/AU-502/8.jpg'], name:'Rio', model:'AU-502', category:'Linear Light',
       specs:[['Wattage','2 Head 4W / 3 Head 6W / 5 Head 10W'],['Dimensions','148×45×32mm'],['Cut Out','139×37mm'],['CCT','3000K / 4000K / 5000K / 6500K / 3-in-1, 2700-6500K (Tunable)'],['CRI','80'],['Body Colour','Black, White'],['Reflector Colour','Grey-Black, Rose Gold']] },
-    { thumb:'assets/products/QT-503/thumb.jpg', images:['assets/products/QT-503/1.jpg','assets/products/QT-503/2.jpg','assets/products/QT-503/3.jpg','assets/products/QT-503/4.jpg','assets/products/QT-503/5.jpg','assets/products/QT-503/6.jpg','assets/products/QT-503/7.jpg','assets/products/QT-503/8.jpg'], name:'Pro Linea', model:'QT-503', category:'Linear Light',
+    { thumb:'assets/products/AU-503/thumb.jpg', images:['assets/products/AU-503/1.jpg','assets/products/AU-503/2.jpg','assets/products/AU-503/3.jpg','assets/products/AU-503/4.jpg','assets/products/AU-503/5.jpg','assets/products/AU-503/6.jpg','assets/products/AU-503/7.jpg','assets/products/AU-503/8.jpg'], name:'Pro Linea', model:'AU-503', category:'Linear Light',
       specs:[['Wattage','3 Head - 6W / 5 Head - 10W / 10 Head - 20W'],['Dimensions (W×H)','97×43×44mm / 150×43×44mm / 283×43×44mm'],['Cut Out','92×35mm / 142×35mm / 275×35mm'],['CCT','3000K / 4000K / 5000K / 6500K / 3-in-1, 2700-6500K (Tunable)'],['CRI','80'],['Body Colour','Black, White']] },
-    { thumb:'assets/products/QT-SL/thumb.jpg', images:['assets/products/QT-SL/1.jpg','assets/products/QT-SL/2.jpg','assets/products/QT-SL/3.jpg','assets/products/QT-SL/4.jpg','assets/products/QT-SL/5.jpg','assets/products/QT-SL/6.jpg','assets/products/QT-SL/7.jpg'], name:'Street Light', model:'QT-SL', category:'Street Light',
+    { thumb:'assets/products/AU-SL/thumb.jpg', images:['assets/products/AU-SL/1.jpg','assets/products/AU-SL/2.jpg','assets/products/AU-SL/3.jpg','assets/products/AU-SL/4.jpg','assets/products/AU-SL/5.jpg','assets/products/AU-SL/6.jpg','assets/products/AU-SL/7.jpg'], name:'Street Light', model:'AU-SL', category:'Street Light',
       specs:[['Wattage','24W / 36W / 50W / 100W'],['Dimensions (W×H)','250×105×40mm / 295×120×40mm / 325×150×40mm / 330×168×40mm'],['CCT','3000K / 4000K / 6500K'],['CRI','80'],['LED Source','BMTC, Bridgelux, Everbrite']] },
-    { thumb:'assets/products/QT-FL/thumb.jpg', images:['assets/products/QT-FL/1.jpg','assets/products/QT-FL/2.jpg','assets/products/QT-FL/3.jpg','assets/products/QT-FL/4.jpg'], name:'Uniq', model:'QT-FL', category:'Flood Light',
+    { thumb:'assets/products/AU-FL/thumb.jpg', images:['assets/products/AU-FL/1.jpg','assets/products/AU-FL/2.jpg','assets/products/AU-FL/3.jpg','assets/products/AU-FL/4.jpg'], name:'Uniq', model:'AU-FL', category:'Flood Light',
       specs:[['Wattage','60W / 120W / 150W / 200W / 250W / 400W'],['Dimensions (H×W)','155×185mm / 195×230mm / 280×280mm / 280×280mm / 290×330mm / 382×425mm'],['CCT','3000K / 4000K / 6500K'],['CRI','80'],['LED Source','BMTC, Bridgelux, Everbrite']] },
-    { thumb:'assets/fallback/fallback_PC_103.jpg', images:['assets/fallback/fallback_PC_103.jpg'], name:'PC', model:'QT-PC', category:'Panel Light',
+    { thumb:'assets/fallback/fallback_PC_103.jpg', images:['assets/fallback/fallback_PC_103.jpg'], name:'PC', model:'AU-PC', category:'Panel Light',
       specs:[['Wattage','8W (4") / 15W (5") / 16W (6") / 22W (6")'],['Dimensions (Round)','115×36mm / 145×36mm / 165×36mm / 165×36mm'],['Dimensions (Square)','115×115×36mm / 145×145×36mm / 165×165×36mm / 165×165×36mm'],['Cut Out','100mm / 125mm / 150mm / 150mm'],['CCT','3000K / 4000K / 5000K / 6500K / 3-in-1'],['CRI','80'],['Body Colour','White']] },
-    { thumb:'assets/fallback/fallback_Zero_Border_105.jpg', images:['assets/fallback/fallback_Zero_Border_105.jpg'], name:'Zero Border', model:'QT-ZB', category:'PC Wireless Surface',
+    { thumb:'assets/fallback/fallback_Zero_Border_105.jpg', images:['assets/fallback/fallback_Zero_Border_105.jpg'], name:'Zero Border', model:'AU-ZB', category:'PC Wireless Surface',
       specs:[['Wattage','15W (5") / 22W (6")'],['Dimensions (W×H)','123×31mm / 145×31mm'],['CCT','3000K / 4000K / 5000K / 6500K / 3-in-1'],['CRI','80'],['Body Colour','Black, White'],['LED Source','Bridgelux, Everbrite']] },
     { thumb:'assets/fallback/fallback_LED_Strip_107.jpg', images:['assets/fallback/fallback_LED_Strip_107.jpg'], name:'LED Strip', model:'Premium', category:'LED Strip',
       specs:[['Voltage / LED Density','12V/24V - 240 LED per Mtr, 5mtr/roll  |  12V/24V - 180 LED per Mtr, 5mtr/roll'],['PCB Width','10mm (240 LED) / 5mm (180 LED)'],['Wattage','240 LED: 12V 55-60W/roll, 24V 75-80W/roll  |  180 LED: 12V/24V 40-45W/roll'],['CCT','3000K / 4000K / 5000K / 6500K']] },
@@ -1072,9 +1279,9 @@
       specs:[['System','25mm track light series, white body finish'],['Includes','TR Profile White Body, Linea White Body, Folding Linea White Body, Track Spot White Body'],['CRI','90 CRI']] },
     { thumb:'assets/fallback/fallback_25MM_White_Body_Series_Part_2__137.jpg', images:['assets/fallback/fallback_25MM_White_Body_Series_Part_2__137.jpg'], name:'25MM White Body Series (Part 2)', model:'Magnetic Track System', category:'Track Light — White Body',
       specs:[['System','25mm track light series, white body finish'],['Includes','Track Channel White Body, Power Connectors White Body, Corner Profile White Body, Connecting Accessories White Body'],['CRI','90 CRI']] },
-    { thumb:'assets/products/QT-301/thumb.jpg', images:['assets/products/QT-301/1.jpg','assets/products/QT-301/2.jpg','assets/products/QT-301/3.jpg','assets/products/QT-301/4.jpg','assets/products/QT-301/5.jpg','assets/products/QT-301/6.jpg','assets/products/QT-301/7.jpg','assets/products/QT-301/8.jpg'], name:'Gloom', model:'QT-301', category:'Track Light',
+    { thumb:'assets/products/AU-301/thumb.jpg', images:['assets/products/AU-301/1.jpg','assets/products/AU-301/2.jpg','assets/products/AU-301/3.jpg','assets/products/AU-301/4.jpg','assets/products/AU-301/5.jpg','assets/products/AU-301/6.jpg','assets/products/AU-301/7.jpg','assets/products/AU-301/8.jpg'], name:'Gloom', model:'AU-301', category:'Track Light',
       specs:[['System','Surface track-mounted spotlight'],['Body Colour','Black, White'],['Note','Contact us for full wattage, CCT and beam angle specifications']] },
-    { thumb:'assets/products/QT-302/thumb.jpg', images:['assets/products/QT-302/1.jpg','assets/products/QT-302/2.jpg','assets/products/QT-302/3.jpg','assets/products/QT-302/4.jpg','assets/products/QT-302/5.jpg','assets/products/QT-302/6.jpg','assets/products/QT-302/7.jpg','assets/products/QT-302/8.jpg'], name:'Flare Lens', model:'QT-302', category:'Track Light',
+    { thumb:'assets/products/AU-302/thumb.jpg', images:['assets/products/AU-302/1.jpg','assets/products/AU-302/2.jpg','assets/products/AU-302/3.jpg','assets/products/AU-302/4.jpg','assets/products/AU-302/5.jpg','assets/products/AU-302/6.jpg','assets/products/AU-302/7.jpg','assets/products/AU-302/8.jpg'], name:'Flare Lens', model:'AU-302', category:'Track Light',
       specs:[['System','Lensed track-mounted spotlight'],['Body Colour','Black, White'],['Note','Contact us for full wattage, CCT and beam angle specifications']] },
   ];
 
@@ -1150,8 +1357,32 @@
       touchStartX = null;
     }, {passive:true});
 
+    function parseSpecOptions(specs, labelMatch){
+      var row = specs.find(function(r){ return r[0].toLowerCase() === labelMatch; });
+      if(!row) return [];
+      return row[1].split('/').map(function(s){ return s.trim(); }).filter(Boolean);
+    }
+
+    function populateConfigField(fieldId, selectId, options){
+      var field = document.getElementById(fieldId);
+      var select = document.getElementById(selectId);
+      if(options.length === 0){
+        field.style.display = 'none';
+        select.innerHTML = '';
+      } else {
+        field.style.display = '';
+        select.innerHTML = options.map(function(o){
+          var safe = o.replace(/"/g, '&quot;');
+          return '<option value="' + safe + '">' + o + '</option>';
+        }).join('');
+      }
+    }
+
+    var currentProduct = null;
+
     window.openProductModal = function(i){
       var p = AURAFIT_PRODUCTS[i];
+      currentProduct = p;
       galleryImages = (p.images && p.images.length) ? p.images : [p.thumb];
       renderGallery();
 
@@ -1165,10 +1396,15 @@
       });
       document.getElementById('pModalSpecs').innerHTML = specsHtml;
 
-      var msg = 'Hello AuraFit team, I have an enquiry about the ' + p.name + ' (Model ' + p.model + ') — ' + p.category + '. Could you please share more details on specifications, pricing and availability? Thank you.';
-      document.getElementById('pModalEnquire').onclick = function(){
-        window.open('https://wa.me/919356447844?text=' + encodeURIComponent(msg), '_blank');
-      };
+      var wattageOptions = parseSpecOptions(p.specs, 'wattage');
+      var cctOptions = parseSpecOptions(p.specs, 'cct');
+      populateConfigField('cfgWattageField', 'pWattageSelect', wattageOptions);
+      populateConfigField('cfgCctField', 'pCctSelect', cctOptions);
+      document.getElementById('pQtyInput').value = 1;
+
+      var addBtn = document.getElementById('pAddToCartBtn');
+      addBtn.classList.remove('added');
+      document.getElementById('pAddCartLabel').textContent = 'Add to Enquiry List';
 
       overlay.classList.add('open');
       document.body.classList.add('modal-locked');
@@ -1187,6 +1423,222 @@
         if(e.key === 'ArrowLeft'){ goToSlide(galleryIndex - 1); }
       }
     });
+
+    document.getElementById('pQtyMinus').addEventListener('click', function(){
+      var inp = document.getElementById('pQtyInput');
+      inp.value = Math.max(1, (parseInt(inp.value, 10) || 1) - 1);
+    });
+    document.getElementById('pQtyPlus').addEventListener('click', function(){
+      var inp = document.getElementById('pQtyInput');
+      inp.value = (parseInt(inp.value, 10) || 1) + 1;
+    });
+
+    /* ---------------- CART ---------------- */
+    var CART_KEY = 'aurafit_cart_v1';
+    function loadCart(){
+      try{
+        var raw = localStorage.getItem(CART_KEY);
+        return raw ? JSON.parse(raw) : [];
+      }catch(e){ return []; }
+    }
+    function saveCart(){
+      try{ localStorage.setItem(CART_KEY, JSON.stringify(cart)); }catch(e){}
+    }
+    var cart = loadCart();
+
+    function renderCartBadge(){
+      var totalQty = cart.reduce(function(sum, item){ return sum + item.qty; }, 0);
+      var countEl = document.getElementById('cartCount');
+      if(totalQty > 0){
+        countEl.style.display = 'flex';
+        countEl.textContent = totalQty > 99 ? '99+' : totalQty;
+      } else {
+        countEl.style.display = 'none';
+      }
+    }
+
+    function changeCartQty(idx, delta){
+      cart[idx].qty = Math.max(1, cart[idx].qty + delta);
+      saveCart();
+      renderCartItems();
+      renderCartBadge();
+    }
+
+    function renderCartItems(){
+      var container = document.getElementById('cartItems');
+      var totalCountEl = document.getElementById('cartTotalCount');
+      if(cart.length === 0){
+        container.innerHTML = '<div class="cart-empty">Your enquiry list is empty.<br>Browse products and add the ones you need.</div>';
+      } else {
+        container.innerHTML = cart.map(function(item, idx){
+          var tags = [];
+          if(item.wattage) tags.push('<span class="tag">' + item.wattage + '</span>');
+          if(item.cct) tags.push('<span class="tag">' + item.cct + '</span>');
+          return '<div class="cart-item">' +
+            '<img src="' + item.thumb + '" alt="' + item.name + '">' +
+            '<div class="cart-item-info">' +
+              '<div class="name">' + item.name + '</div>' +
+              '<span class="model">Model ' + item.model + '</span>' +
+              '<div class="tags">' + tags.join('') + '</div>' +
+              '<div class="cart-item-controls">' +
+                '<div class="qty-stepper">' +
+                  '<button type="button" class="cart-qty-minus" data-idx="' + idx + '">&minus;</button>' +
+                  '<input type="number" min="1" value="' + item.qty + '" class="cart-qty-input" data-idx="' + idx + '">' +
+                  '<button type="button" class="cart-qty-plus" data-idx="' + idx + '">&plus;</button>' +
+                '</div>' +
+                '<button type="button" class="cart-remove" data-idx="' + idx + '">Remove</button>' +
+              '</div>' +
+            '</div>' +
+          '</div>';
+        }).join('');
+      }
+      var totalQty = cart.reduce(function(sum, item){ return sum + item.qty; }, 0);
+      totalCountEl.textContent = totalQty;
+
+      Array.prototype.forEach.call(container.querySelectorAll('.cart-qty-minus'), function(btn){
+        btn.addEventListener('click', function(){ changeCartQty(parseInt(btn.getAttribute('data-idx'), 10), -1); });
+      });
+      Array.prototype.forEach.call(container.querySelectorAll('.cart-qty-plus'), function(btn){
+        btn.addEventListener('click', function(){ changeCartQty(parseInt(btn.getAttribute('data-idx'), 10), 1); });
+      });
+      Array.prototype.forEach.call(container.querySelectorAll('.cart-qty-input'), function(inp){
+        inp.addEventListener('change', function(){
+          var idx = parseInt(inp.getAttribute('data-idx'), 10);
+          var val = Math.max(1, parseInt(inp.value, 10) || 1);
+          cart[idx].qty = val;
+          saveCart();
+          renderCartItems();
+          renderCartBadge();
+        });
+      });
+      Array.prototype.forEach.call(container.querySelectorAll('.cart-remove'), function(btn){
+        btn.addEventListener('click', function(){
+          var idx = parseInt(btn.getAttribute('data-idx'), 10);
+          cart.splice(idx, 1);
+          saveCart();
+          renderCartItems();
+          renderCartBadge();
+        });
+      });
+    }
+
+    function addToCart(product, wattage, cct, qty){
+      var id = product.model + '|' + (wattage || '') + '|' + (cct || '');
+      var existing = cart.find(function(item){ return item.id === id; });
+      if(existing){
+        existing.qty += qty;
+      } else {
+        cart.push({
+          id: id,
+          name: product.name,
+          model: product.model,
+          category: product.category,
+          thumb: (product.images && product.images.length) ? product.images[0] : product.thumb,
+          wattage: wattage,
+          cct: cct,
+          qty: qty
+        });
+      }
+      saveCart();
+      renderCartBadge();
+      renderCartItems();
+    }
+
+    document.getElementById('pAddToCartBtn').addEventListener('click', function(){
+      if(!currentProduct) return;
+      var wattageSelect = document.getElementById('pWattageSelect');
+      var cctSelect = document.getElementById('pCctSelect');
+      var wattage = wattageSelect.options.length ? wattageSelect.value : '';
+      var cct = cctSelect.options.length ? cctSelect.value : '';
+      var qty = Math.max(1, parseInt(document.getElementById('pQtyInput').value, 10) || 1);
+      addToCart(currentProduct, wattage, cct, qty);
+
+      var btn = document.getElementById('pAddToCartBtn');
+      var label = document.getElementById('pAddCartLabel');
+      btn.classList.add('added');
+      label.textContent = 'Added ✓';
+      setTimeout(function(){
+        btn.classList.remove('added');
+        label.textContent = 'Add to Enquiry List';
+      }, 1200);
+    });
+
+    var cartOverlay = document.getElementById('cartOverlay');
+    function openCart(){
+      renderCartItems();
+      cartOverlay.classList.add('open');
+      document.body.classList.add('modal-locked');
+    }
+    function closeCart(){
+      cartOverlay.classList.remove('open');
+      document.body.classList.remove('modal-locked');
+    }
+    document.getElementById('cartFab').addEventListener('click', openCart);
+    document.getElementById('cartClose').addEventListener('click', closeCart);
+    cartOverlay.addEventListener('click', function(e){ if(e.target === cartOverlay){ closeCart(); } });
+
+    /* ---------------- CONTACT FORM ---------------- */
+    var contactOverlay = document.getElementById('contactOverlay');
+    function openContactForm(){
+      document.getElementById('contactError').textContent = '';
+      contactOverlay.classList.add('open');
+    }
+    function closeContactForm(){
+      contactOverlay.classList.remove('open');
+    }
+    document.getElementById('cartCheckoutBtn').addEventListener('click', function(){
+      if(cart.length === 0) return;
+      openContactForm();
+    });
+    document.getElementById('contactCancelBtn').addEventListener('click', closeContactForm);
+    contactOverlay.addEventListener('click', function(e){ if(e.target === contactOverlay){ closeContactForm(); } });
+
+    document.getElementById('contactSubmitBtn').addEventListener('click', function(){
+      var name = document.getElementById('custName').value.trim();
+      var phone = document.getElementById('custPhone').value.trim();
+      var errorEl = document.getElementById('contactError');
+
+      if(!name){
+        errorEl.textContent = 'Please enter your name.';
+        return;
+      }
+      if(!phone || phone.replace(/[^0-9]/g, '').length < 7){
+        errorEl.textContent = 'Please enter a valid contact number.';
+        return;
+      }
+      errorEl.textContent = '';
+
+      var lines = [];
+      lines.push('Hello AuraFit team, I would like to enquire about the following products:');
+      lines.push('');
+      cart.forEach(function(item, idx){
+        var parts = [];
+        if(item.wattage) parts.push('Wattage: ' + item.wattage);
+        if(item.cct) parts.push('CCT: ' + item.cct);
+        parts.push('Qty: ' + item.qty);
+        lines.push((idx + 1) + '. ' + item.name + ' (Model ' + item.model + ') — ' + item.category);
+        lines.push('    ' + parts.join(' | '));
+      });
+      lines.push('');
+      lines.push('Customer Name: ' + name);
+      lines.push('Contact Number: ' + phone);
+      lines.push('');
+      lines.push('Please share pricing and availability. Thank you.');
+
+      var msg = lines.join('\n');
+      window.open('https://wa.me/919356447844?text=' + encodeURIComponent(msg), '_blank');
+
+      cart = [];
+      saveCart();
+      renderCartBadge();
+      renderCartItems();
+      closeContactForm();
+      closeCart();
+      document.getElementById('custName').value = '';
+      document.getElementById('custPhone').value = '';
+    });
+
+    renderCartBadge();
   })();
 </script>
 </body>
