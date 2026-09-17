@@ -906,6 +906,10 @@
           <label>Colour Temperature (CCT)</label>
           <select id="pCctSelect"></select>
         </div>
+        <div class="cfg-field" id="cfgColourField">
+          <label>Body Colour</label>
+          <select id="pColourSelect"></select>
+        </div>
         <div class="cfg-field cfg-qty-field">
           <label>Quantity</label>
           <div class="qty-stepper">
@@ -1357,10 +1361,24 @@
       touchStartX = null;
     }, {passive:true});
 
-    function parseSpecOptions(specs, labelMatch){
+    function parseSpecOptions(specs, labelMatch, delimiter){
       var row = specs.find(function(r){ return r[0].toLowerCase() === labelMatch; });
       if(!row) return [];
-      return row[1].split('/').map(function(s){ return s.trim(); }).filter(Boolean);
+      var d = delimiter || '/';
+      return row[1].split(d).map(function(s){ return s.trim(); }).filter(Boolean);
+    }
+
+    var COLOUR_ABBR = {
+      'black':'BLK', 'white':'WH', 'grey':'GRY', 'gray':'GRY',
+      'grey-black':'GRY-BLK', 'gray-black':'GRY-BLK',
+      'rose gold':'RG', 'silver':'SLV', 'gold':'GLD',
+      'bronze':'BRZ', 'copper':'CPR'
+    };
+    function abbreviateColour(name){
+      if(!name) return '';
+      var key = name.trim().toLowerCase();
+      if(COLOUR_ABBR[key]) return COLOUR_ABBR[key];
+      return name.trim().slice(0,3).toUpperCase();
     }
 
     function populateConfigField(fieldId, selectId, options){
@@ -1396,10 +1414,12 @@
       });
       document.getElementById('pModalSpecs').innerHTML = specsHtml;
 
-      var wattageOptions = parseSpecOptions(p.specs, 'wattage');
-      var cctOptions = parseSpecOptions(p.specs, 'cct');
+      var wattageOptions = parseSpecOptions(p.specs, 'wattage', '/');
+      var cctOptions = parseSpecOptions(p.specs, 'cct', '/');
+      var colourOptions = parseSpecOptions(p.specs, 'body colour', ',');
       populateConfigField('cfgWattageField', 'pWattageSelect', wattageOptions);
       populateConfigField('cfgCctField', 'pCctSelect', cctOptions);
+      populateConfigField('cfgColourField', 'pColourSelect', colourOptions);
       document.getElementById('pQtyInput').value = 1;
 
       var addBtn = document.getElementById('pAddToCartBtn');
@@ -1474,6 +1494,7 @@
           var tags = [];
           if(item.wattage) tags.push('<span class="tag">' + item.wattage + '</span>');
           if(item.cct) tags.push('<span class="tag">' + item.cct + '</span>');
+          if(item.colour) tags.push('<span class="tag">' + item.colour + '</span>');
           return '<div class="cart-item">' +
             '<img src="' + item.thumb + '" alt="' + item.name + '">' +
             '<div class="cart-item-info">' +
@@ -1522,8 +1543,8 @@
       });
     }
 
-    function addToCart(product, wattage, cct, qty){
-      var id = product.model + '|' + (wattage || '') + '|' + (cct || '');
+    function addToCart(product, wattage, cct, colour, qty){
+      var id = product.model + '|' + (wattage || '') + '|' + (cct || '') + '|' + (colour || '');
       var existing = cart.find(function(item){ return item.id === id; });
       if(existing){
         existing.qty += qty;
@@ -1536,6 +1557,7 @@
           thumb: (product.images && product.images.length) ? product.images[0] : product.thumb,
           wattage: wattage,
           cct: cct,
+          colour: colour,
           qty: qty
         });
       }
@@ -1548,10 +1570,12 @@
       if(!currentProduct) return;
       var wattageSelect = document.getElementById('pWattageSelect');
       var cctSelect = document.getElementById('pCctSelect');
+      var colourSelect = document.getElementById('pColourSelect');
       var wattage = wattageSelect.options.length ? wattageSelect.value : '';
       var cct = cctSelect.options.length ? cctSelect.value : '';
+      var colour = colourSelect.options.length ? colourSelect.value : '';
       var qty = Math.max(1, parseInt(document.getElementById('pQtyInput').value, 10) || 1);
-      addToCart(currentProduct, wattage, cct, qty);
+      addToCart(currentProduct, wattage, cct, colour, qty);
 
       var btn = document.getElementById('pAddToCartBtn');
       var label = document.getElementById('pAddCartLabel');
@@ -1615,6 +1639,7 @@
         var parts = [];
         if(item.wattage) parts.push('Wattage: ' + item.wattage);
         if(item.cct) parts.push('CCT: ' + item.cct);
+        if(item.colour) parts.push('Colour: ' + abbreviateColour(item.colour));
         parts.push('Qty: ' + item.qty);
         lines.push((idx + 1) + '. ' + item.name + ' (Model ' + item.model + ') — ' + item.category);
         lines.push('    ' + parts.join(' | '));
