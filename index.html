@@ -426,7 +426,6 @@
     input, select, textarea{ font-size:16px !important; }  /* stops iOS auto-zoom on focus */
   }
   .qty-stepper button:active{ background:var(--black-3); transform:none; }
-  .product-card{ content-visibility:auto; contain-intrinsic-size:320px; }
   .product-card.is-hidden{ display:none; }
 
   /* ---------- SEARCH ---------- */
@@ -510,7 +509,7 @@
   /* ---------- PRODUCTS ---------- */
   .products-section{ background:var(--black); }
   .product-grid{
-    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1px;
     background:var(--line); border:1px solid var(--line);
   }
   .product-card{
@@ -541,7 +540,7 @@
   .product-card .p-cat{ font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold-2); margin-bottom:8px; display:block; }
   .product-card .p-name{ font-size:18px; letter-spacing:0.04em; color:var(--ivory); margin-bottom:4px; font-weight:500; }
   .product-card .p-model{ font-size:12px; color:var(--grey-dim); font-family:'Cormorant Garamond',serif; font-style:italic; }
-  @media(max-width:900px){ .product-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media(max-width:900px){ .product-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
   @media(max-width:520px){ .product-grid{ grid-template-columns:1fr 1fr; } .product-card .p-info{ padding:14px 14px 18px; } .product-card .p-name{ font-size:15px; } }
 
   /* ---------- PRODUCT MODAL ---------- */
@@ -876,6 +875,77 @@
     .wrap{padding:0 20px;}
     .contact-card{padding:30px 24px;}
     .positioning span{padding:0 12px;}
+  }
+
+  /* =====================  MOBILE POLISH  ===================== */
+  html{ touch-action:manipulation; -webkit-text-size-adjust:100%; }
+  @media (hover:none){
+    .product-card:hover{ background:var(--black-2); }
+    .product-card:hover img{ transform:none; }
+    .product-card:active{ transform:scale(.975); }
+    .product-card{ transition:transform .15s ease, background .3s ease; }
+  }
+  @media (max-width:900px){
+    /* keep a search shortcut in the top bar on phones */
+    .navlinks{ display:flex !important; gap:0; }
+    .navlinks a:not(#navSearchLink){ display:none; }
+    #navSearchLink{ font-size:0 !important; gap:0 !important; width:42px; height:42px; justify-content:center; border:1px solid var(--line); border-radius:50%; }
+    #navSearchLink svg{ width:17px; height:17px; }
+  }
+  @media (max-width:700px){
+    nav{ padding:16px 18px !important; }
+    header.scrolled nav{ padding:10px 18px !important; }
+    .products-section .wrap{ padding-left:18px; padding-right:18px; }
+    .product-search{ margin-top:22px; }
+    .product-search input{ padding:14px 44px 14px 46px; border-radius:14px; }
+    .search-meta{ margin-top:10px; min-height:0; }
+    .product-search-wrap{ margin-bottom:18px; }
+    .products-section .section-head{ margin-bottom:0; }
+    .product-grid{ margin-top:14px; }
+
+    .product-grid{ gap:10px; background:transparent; border:none; padding:0 12px; }
+    .product-card{ border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--black-2); }
+    .product-card .p-thumb-wrap{ aspect-ratio:1/1; padding:0; background:#14110c; }
+    .product-card img{ object-fit:cover; }
+    .product-card .p-new{ top:8px; left:8px; font-size:8.5px; padding:4px 8px; }
+    .product-card .p-photo-count{ right:8px; bottom:8px; padding:3px 7px; font-size:9.5px; }
+    .product-card .p-info{ padding:11px 12px 14px; }
+    .product-card .p-cat{ font-size:8.5px; letter-spacing:0.14em; margin-bottom:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .product-card .p-name{
+      font-size:13.5px; line-height:1.3; letter-spacing:0.01em; margin-bottom:3px;
+      display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; min-height:2.6em;
+    }
+    .product-card .p-model{ font-size:11.5px; }
+
+    /* product window becomes a bottom sheet */
+    .p-modal-overlay{ padding:0; align-items:flex-end; }
+    .p-modal{
+      grid-template-columns:1fr; max-height:94vh; max-height:94dvh; border-radius:20px 20px 0 0; border-left:none; border-right:none; border-bottom:none;
+      transform:none !important; animation:sheetUp .38s cubic-bezier(.22,1,.36,1);
+      overscroll-behavior:contain; -webkit-overflow-scrolling:touch;
+    }
+    @keyframes sheetUp{ from{ transform:translateY(60px); opacity:.4; } to{ transform:none; opacity:1; } }
+    .p-modal-close{ position:fixed; top:calc(env(safe-area-inset-top,0px) + 12px); right:12px; width:40px; height:40px; background:rgba(6,5,4,0.78); }
+    .p-modal-image{ min-height:0; aspect-ratio:4/3; }
+    .p-gallery-track .slide{ padding:0; }
+    .p-gallery-track .slide img{ object-fit:cover; }
+    .p-gallery-arrow{ width:34px; height:34px; }
+    .p-gallery-arrow.prev{ left:8px; } .p-gallery-arrow.next{ right:8px; }
+    .p-modal-body{ padding:22px 18px 16px; }
+    .p-modal-body h3{ font-size:22px; }
+    .p-modal-body .p-model{ margin-bottom:16px; }
+    .p-spec-list{ margin-bottom:18px; }
+    .p-spec-list .row{ flex-direction:column; gap:4px; padding:11px 0; }
+    .p-spec-list .row .v{ text-align:left; }
+    .p-configurator{ margin:18px 0 14px; padding-top:16px; }
+    .swatches{ gap:11px; }
+    .swatch{ width:38px; height:38px; }
+    .qty-stepper{ width:100%; max-width:200px; }
+    .qty-stepper button{ width:52px; height:48px; font-size:22px; }
+    #pAddToCartBtn{
+      position:sticky; bottom:calc(env(safe-area-inset-bottom,0px) + 10px); z-index:4;
+      box-shadow:0 -14px 22px 8px var(--black-2), 0 10px 30px -10px rgba(0,0,0,.8);
+    }
   }
 </style>
 </head>
@@ -1970,6 +2040,19 @@
   window.addEventListener('keydown', onKey);
   intro.addEventListener('click', go);
   cue.addEventListener('click', go);
+})();
+</script>
+
+<script>
+(function(){
+  var last = 0;
+  document.addEventListener('touchend', function(e){
+    var t = e.target;
+    if(t.closest && t.closest('input, select, textarea, label, .qty-stepper, .p-addcart-btn, .swatch, .cart-fab')) { last = 0; return; }
+    var now = Date.now();
+    if(now - last < 350 && e.cancelable){ e.preventDefault(); }
+    last = now;
+  }, {passive:false});
 })();
 </script>
 </body>
