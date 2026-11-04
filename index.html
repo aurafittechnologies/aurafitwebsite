@@ -944,7 +944,12 @@
   .ft-note a{ color:#fff; }
   .ft-bottom{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; padding-top:34px; border-top:1px solid rgba(255,255,255,.12); font-size:13.5px; color:#8d8d8d; letter-spacing:.04em; }
   .ft-india{ display:flex; align-items:center; gap:12px; color:#fff; font-weight:600; font-size:13px; }
-  .ft-india svg{ width:22px; height:22px; color:var(--ar); }
+  .ft-right{ display:flex; align-items:center; flex-wrap:wrap; justify-content:flex-end; gap:12px 28px; }
+.ft-credit{ color:#8d8d8d; font-size:13px; letter-spacing:.04em; transition:color .25s ease; -webkit-tap-highlight-color:transparent; }
+.ft-credit b{ color:#fff; font-weight:600; }
+.ft-credit:hover, .ft-credit:hover b{ color:var(--gold-1); }
+@media (max-width:700px){ .ft-right{ justify-content:flex-start; } }
+.ft-india svg{ width:22px; height:22px; color:var(--ar); }
   .cart-fab{ background:var(--ar) !important; box-shadow:0 12px 30px -8px rgba(225,37,27,.55) !important; }
   .cart-fab svg{ color:#fff !important; }
   @media(max-width:1000px){
@@ -968,6 +973,20 @@
   .pv .swatch{ position:relative; overflow:hidden; flex:0 0 auto; }
   .pv .swatches.on{ display:flex; flex-wrap:wrap; }
   .pv-info{ overscroll-behavior:auto; }
+
+  /* ---------- AURAFIT EXPERIENCE ---------- */
+  .xp{padding:90px 0 30px;position:relative;z-index:2;}
+  .xp-card{display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:30px;padding:clamp(28px,5vw,64px);border:1px solid var(--line);border-radius:6px;background:radial-gradient(ellipse 600px 380px at 85% 50%,rgba(216,178,92,.14),transparent 70%),linear-gradient(135deg,var(--black-3),var(--black-2));overflow:hidden;transition:border-color .35s ease,transform .35s ease;-webkit-tap-highlight-color:transparent;}
+  .xp-card:hover{border-color:rgba(216,178,92,.55);transform:translateY(-3px);}
+  .xp-copy{display:flex;flex-direction:column;align-items:flex-start;gap:20px;min-width:0;}
+  .xp-copy h2{font-size:clamp(30px,4.6vw,56px);font-weight:200;letter-spacing:.14em;line-height:1.1;}
+  .xp-copy h2 b{font-weight:600;}
+  .xp-copy p{color:var(--grey);font-size:15px;line-height:1.8;max-width:480px;}
+  .xp-vis{display:grid;place-items:center;min-height:240px;}
+  .xp-lamp{width:clamp(120px,16vw,170px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 50% 45%,#fff3c4 0,#f0cf76 24%,#b8860b 46%,#2a2012 50%,#0c0a08 100%);box-shadow:0 0 0 1px var(--line),0 0 90px 24px rgba(216,178,92,.32);animation:xpPulse 4s ease-in-out infinite;}
+  @keyframes xpPulse{0%,100%{box-shadow:0 0 0 1px var(--line),0 0 60px 14px rgba(216,178,92,.22);}50%{box-shadow:0 0 0 1px var(--line),0 0 110px 30px rgba(216,178,92,.42);}}
+  @media (prefers-reduced-motion:reduce){.xp-lamp{animation:none;}}
+  @media (max-width:820px){.xp{padding:60px 0 10px;}.xp-card{grid-template-columns:1fr;gap:8px;}.xp-vis{order:-1;min-height:190px;}}
 </style>
 </head>
 <body>
@@ -985,6 +1004,7 @@
       <a href="#products">Products</a>
       <a href="#products" id="navSearchLink" aria-label="Search products" style="display:inline-flex;align-items:center;gap:8px;"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Search</a>
       <a href="#features">Range</a>
+      <a href="aurafit-experience.html">Experience</a>
       <a href="#contact">Contact</a>
     </div>
     <a href="#contact" class="nav-cta">Enquire</a>
@@ -1170,6 +1190,20 @@
   </div>
 </div>
 
+<section class="xp" id="experience">
+  <div class="wrap">
+    <a class="xp-card" href="aurafit-experience.html" aria-label="Enter the AuraFit Experience">
+      <div class="xp-copy">
+        <span class="eyebrow">Interactive 3D</span>
+        <h2>AURAFIT <b class="gold-text">EXPERIENCE</b></h2>
+        <p>See AuraFit light up in 3D. Switch it on, change the wattage and colour temperature, and take a COB spot light apart piece by piece.</p>
+        <span class="btn btn-primary">Enter the Experience &rarr;</span>
+      </div>
+      <div class="xp-vis" aria-hidden="true"><div class="xp-lamp"></div></div>
+    </a>
+  </div>
+</section>
+
 <section class="rg" id="features">
   <svg class="wm" viewBox="0 0 340 300" fill="none" stroke="currentColor" stroke-width="10"><path d="M170 20 L270 260 L235 260 L170 105 L105 260 L70 260 Z"/></svg>
   <div class="rg-wrap">
@@ -1268,7 +1302,7 @@
         <a href="mailto:support@aurafittechnologies.com?subject=Enquiry">Enquire Now</a>
       </div>
       <div class="ft-col"><h4>About AuraFit</h4>
-        <a href="#about">About Us</a><a href="#features">Our Range</a><a href="#products" data-q="" data-new="1">Latest</a><a href="#products" data-q="">All Products</a>
+        <a href="#about">About Us</a><a href="aurafit-experience.html">AuraFit Experience</a><a href="#features">Our Range</a><a href="#products" data-q="" data-new="1">Latest</a><a href="#products" data-q="">All Products</a>
       </div>
       <div class="ft-col ft-contact"><h4>Contact Us</h4>
         <span class="ft-k">WhatsApp Support</span>
@@ -1283,7 +1317,7 @@
     </div>
     <div class="ft-bottom">
       <span>&copy; 2026 AuraFit Technologies. All rights reserved.</span>
-      <span class="ft-india"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3L21 20H3z"/></svg>Proudly Made in India</span>
+      <span class="ft-right"><a class="ft-credit" href="https://d20ekp6egmgzvc.cloudfront.net/?utm_source=ig&amp;utm_medium=social&amp;utm_content=link_in_bio&amp;fbclid=PAdGRleAVYBPpleHRuA2FlbQIxMQBwZG9mAmZkaWQWURkMzvgD6NQ_SQDKEaBMImc0h_MCHXNydGMGYXBwX2lkDzEyNDAyNDU3NDI4NzQxNAABp4R451fqbyZX9BrHatdTPG3R7GDQeR6PJa3k6Qdc9LaSbFmK1oEjVkZI523J_aem_bOWMieUZNU89yUI41TB9PQ" target="_blank" rel="noopener">Website design &amp; developed by <b>Darsh Sonawane</b></a><span class="ft-india"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3L21 20H3z"/></svg>Proudly Made in India</span></span>
     </div>
   </div>
 </footer>
@@ -1421,7 +1455,7 @@
     { thumb:'assets/products/AU-FL/thumb.jpg', images:['assets/products/AU-FL/1.jpg','assets/products/AU-FL/2.jpg','assets/products/AU-FL/3.jpg','assets/products/AU-FL/4.jpg'], name:'Uniq', model:'AU-FL', category:'Flood Light',
       specs:[['Wattage','60W / 120W / 150W / 200W / 250W / 400W'],['Dimensions (H×W)','155×185mm / 195×230mm / 280×280mm / 280×280mm / 290×330mm / 382×425mm'],['CCT','3000K / 4000K / 6500K'],['CRI','80'],['LED Source','BMTC, Bridgelux, Everbrite']] },
     { thumb:'assets/fallback/fallback_PC_103.jpg', images:['assets/fallback/fallback_PC_103.jpg'], name:'PC', model:'AU-PC', category:'Panel Light',
-      specs:[['Wattage','8W (4") / 15W (5") / 16W (6") / 22W (6")'],['Dimensions (Round)','115×36mm / 145×36mm / 165×36mm / 165×36mm'],['Dimensions (Square)','115×115×36mm / 145×145×36mm / 165×165×36mm / 165×165×36mm'],['Cut Out','100mm / 125mm / 150mm / 150mm'],['CCT','3000K / 4000K / 5000K / 6500K / 3-in-1'],['CRI','80'],['Body Colour','White']] },
+      specs:[['Wattage','8W (4") / 15W (5") / 22W (6")'],['Dimensions (Round)','115×36mm / 145×36mm / 165×36mm'],['Dimensions (Square)','115×115×36mm / 145×145×36mm / 165×165×36mm'],['Cut Out','100mm / 125mm / 150mm'],['CCT','3000K / 4000K / 5000K / 6500K / 3-in-1'],['CRI','80'],['Body Colour','White']] },
     { thumb:'assets/fallback/fallback_Zero_Border_105.jpg', images:['assets/fallback/fallback_Zero_Border_105.jpg'], name:'Zero Border', model:'AU-ZB', category:'PC Wireless Surface',
       specs:[['Wattage','15W (5") / 22W (6")'],['Dimensions (W×H)','123×31mm / 145×31mm'],['CCT','3000K / 4000K / 5000K / 6500K / 3-in-1'],['CRI','80'],['Body Colour','Black, White'],['LED Source','Bridgelux, Everbrite']] },
     { thumb:'assets/fallback/fallback_LED_Strip_107.jpg', images:['assets/fallback/fallback_LED_Strip_107.jpg'], name:'LED Strip', model:'Premium', category:'LED Strip',
